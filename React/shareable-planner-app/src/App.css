@@ -3,7 +3,7 @@
 }
 
 body{
-  background-color: lightskyblue;
+  background-color: lightblue;
 }
 
 /* Position the Calendar */
@@ -73,3 +73,9 @@ body{
   padding: 1.2%;
 }
 
+/* GMU Events Button Styling */
+.gmuEventsButton{
+  position: absolute;
+  left: 46%;
+  top: 36%;
+}

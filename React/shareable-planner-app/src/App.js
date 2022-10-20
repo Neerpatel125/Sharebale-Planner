@@ -3,7 +3,11 @@ import Calendar from "react-calendar";
 import './App.css';
 
 function App() {
+  /* Get the current date for the calendar */
   const value = useState(new Date());
+  /* Open the GMU events website function */
+  const gmuEvents = () => {
+    window.open("https://mason360.gmu.edu/events", "_blank");}
   
   return (
     <>
@@ -41,6 +45,8 @@ function App() {
       </div>
     </div>
 
+    {/* HTML for GMU Events Button */}
+    <button onClick={() => gmuEvents()} class="gmuEventsButton">GMU Events</button>
     </>
   );
 }
