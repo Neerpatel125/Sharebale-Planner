@@ -7,14 +7,13 @@ function App() {
   const value = useState(new Date());
   /* Open the GMU events website function */
   const gmuEvents = () => {
-    window.open("https://mason360.gmu.edu/events", "_blank");}
+    window.open("https://mason360.gmu.edu/events", "_blank");
+  }
   
   return (
     <>
     {/* HTML for the Title */}
-    <h1 class = "Title">
-      Shareable Planner
-    </h1>
+    <h1 class = "Title">Shareable Planner</h1>
 
     {/* HTML for the Calendar */}
     <div class = "calendar">
