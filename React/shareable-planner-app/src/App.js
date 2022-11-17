@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import './App.css';
 import EventsList from "./EventsList";
@@ -25,15 +25,11 @@ function App() {
       return [...prevEvents, event];
     });
   }
-  /* Update the selected day */
-  function handleClickDay(day){
-    /* ISSUE:  setSelectedDay() is not updating selectedDay immediately (have to click the day twice). */
-    console.log("Day param: ", day);
-    setSelectedDay(day);
-    console.log("Selected Day: ", selectedDay);
+  /* Update stringSelectedDay whenver selectedDay changes*/
+  useEffect(() => {
     const splitSelectedDay = selectedDay.toString().split(" ").slice(0, 4);
     setStringSelectedDay(splitSelectedDay.map( (word) => word = word + " "));
-  }
+  }, [selectedDay]);
   
   return(
     <>
@@ -44,7 +40,7 @@ function App() {
     <div class = "calendar">
       <Calendar value={selectedDay} minDetail="month" 
         next2Label={null} prev2Label={null} showNeighboringMonth={false} 
-        onClickDay={handleClickDay}> </Calendar>
+        onClickDay={(day)=> setSelectedDay(day)}> </Calendar>
     </div>
 
     {/* HTML for the Events List Box */}
