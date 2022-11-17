@@ -51,6 +51,14 @@ body{
 .eventsBox__title{
   text-align: center;
 }
+.eventsBox__EventsList{
+  overflow: hidden;
+  overflow-y: scroll;
+  list-style-position: inside;
+}
+.eventsBox__EventsList__ListEvent{
+  list-style-type: square;
+}
 
 /* Add Events Box Styling */
 .addBox{  
