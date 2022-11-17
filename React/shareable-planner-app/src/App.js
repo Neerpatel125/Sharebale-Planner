@@ -27,7 +27,7 @@ function App() {
   }
   /* Update the selected day */
   function handleClickDay(day){
-    /* ISSUE:  setSelectedDay() is not updating selectedDay immediately. */
+    /* ISSUE:  setSelectedDay() is not updating selectedDay immediately (have to click the day twice). */
     console.log("Day param: ", day);
     setSelectedDay(day);
     console.log("Selected Day: ", selectedDay);
