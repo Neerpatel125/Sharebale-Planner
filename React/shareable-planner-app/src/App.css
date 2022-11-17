@@ -17,14 +17,14 @@ body{
 /* Style the Month button and arrows */
 .react-calendar__navigation{
   display: flex;
-
-  .react-calendar__navigation__label{
-    font-weight: bold;
-  }
-  .react-calendar__navigation__arrow{
-    flex-grow: 0.333;
-  }
 }
+.react-calendar__navigation__label{
+    font-weight: bold;
+}
+.react-calendar__navigation__arrow{
+    flex-grow: 0.333;
+}
+
 /* Center the Weekday Labels */
 .react-calendar__month-view__weekdays {
   text-align: center;
@@ -52,12 +52,17 @@ body{
   text-align: center;
 }
 .eventsBox__EventsList{
+  height: 85%;
   overflow: hidden;
   overflow-y: scroll;
+  overflow-x: scroll;
   list-style-position: inside;
 }
 .eventsBox__EventsList__ListEvent{
   list-style-type: square;
+}
+.eventsBox__EventsList__ListEvent__Button{
+  margin-right: 5%;
 }
 
 /* Add Events Box Styling */

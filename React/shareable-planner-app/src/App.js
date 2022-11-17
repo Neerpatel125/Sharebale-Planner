@@ -51,7 +51,7 @@ function App() {
       <div class="eventsBox__title">
         <h2>Events for {stringSelectedDay}</h2>
       </div>
-      <EventsList events={myEvents}/>
+      <EventsList events={myEvents} setEvents={setMyEvents}/>
     </div>
 
     {/* HTML for the Add Events Box */}
