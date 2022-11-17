@@ -9,6 +9,8 @@ function App() {
   const gmuEvents = () => {
     window.open("https://mason360.gmu.edu/events", "_blank");
   }
+  /* Store input information for adding events */
+  
   
   return (
     <>
@@ -37,6 +39,8 @@ function App() {
       <div class="addBox__content">
         <h3>Enter the name of the event: </h3>
         <input placeholder="Event Name"></input>
+        <h3>Enter the time of the event: </h3>
+        <input placeholder="12:00 PM to 1:00 PM"></input>
         <h3>Enter names of people to invite</h3>
         <input placeholder="Name1, Name2, ..."></input>
         <br></br> <br></br>
