@@ -10,8 +10,7 @@ export default function ListEvent( {event, index, events, setMyEvents} ){
     return(
         <li class="eventsBox__EventsList__ListEvent">
             <button onClick={handleOnClick} class="eventsBox__EventsList__ListEvent__Button">Remove</button>
-            {event.eventName}
-            {event.eventTime}
+            {event.eventName} {event.eventTime}
         </li>
     );
 }
