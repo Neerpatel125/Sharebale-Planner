@@ -25,7 +25,10 @@ function App() {
       return [...prevEvents, event];
     });
   }
-  /* Update stringSelectedDay whenver selectedDay changes*/
+  /* Updates stringSelectedDay whenver selectedDay changes.  
+    Note: When selectedDay changes, you should load the events for the new day from the databse into myEvents,
+    then <EventsList events={myEvents}/> will update the list to display events for the new day upon re-rendering. 
+  */
   useEffect(() => {
     const splitSelectedDay = selectedDay.toString().split(" ").slice(0, 4);
     setStringSelectedDay(splitSelectedDay.map( (word) => word = word + " "));
