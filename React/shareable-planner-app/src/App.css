@@ -1,0 +1,176 @@
+
+/* Login and Register Page CSS */
+.login-page1 {
+    height: 100vh;
+    position:relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.login-page1 .row {
+    height: 150%;
+}
+
+.text-part {   
+    width: 70%;
+    padding: 5px;
+    margin:100px;
+}
+
+.login-page1 input {
+    margin-top: 15px;
+    height: 50px;
+    width: 50%;
+}
+
+.login-page1 button {
+    font-size:20px;
+    height: 50px;
+    margin-top: 15px;
+    width: 50%;
+    background-color: brown;
+    color: white;
+}
+
+.login-page1 h1 {
+    font-size: 60px;
+    color: transparent;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: brown;
+    font-weight:bold;
+    margin: 30px 200px;
+    
+}
+.login-page1 a{
+    color:rgb(16, 19, 206);
+}
+.login-page1 img{
+    height: 40%;
+    position: absolute;
+    margin-left: 50%;
+    top: 0%;
+    margin-top: 15%;
+    /*float: right;*/
+    /* width: 150px;
+    height: 38px; */
+}
+.login-page1-rectangle{
+    width: 980px;
+    height: 260vh;
+    background-color:brown;
+    position: absolute;
+    right:-400px;
+    bottom: -550px;
+    transform: rotate(30deg);
+    z-index: -1;
+}
+
+
+
+
+
+/* Home Page CSS */
+
+.Title{
+    text-align: center;
+  }
+  
+  body{
+    background-color: lightblue;
+  }
+  
+  /* Position the Calendar */
+  .calendar{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 1%;
+    height: 30%; 
+  }
+  /* Style the Month button and arrows */
+  .react-calendar__navigation{
+    display: flex;
+  }
+  .react-calendar__navigation__label{
+      font-weight: bold;
+  }
+  .react-calendar__navigation__arrow{
+      flex-grow: 0.333;
+  }
+  
+  /* Center the Weekday Labels */
+  .react-calendar__month-view__weekdays {
+    text-align: center;
+    font-weight: bold;
+  }
+  /* Style the buttons on the calendar */
+  .calendar button{
+    background-color: lightseagreen;
+  }
+  
+  .calendar button:focus{
+    background-color: white;
+  }
+  
+  /* Events Box Styling */
+  .eventsBox{
+    position: absolute;
+    top: 40%;
+    width: 48%;
+    height: 55%;
+    border-style: solid;
+    border-width: medium;
+    overflow: scroll;
+  }
+  .eventsBox__title{
+    text-align: center;
+  }
+  .eventsBox__Table{
+    height: 85%;
+    width: 90%;
+    text-align: center;
+  }
+  .eventsBox__Table__Head{
+   
+  }
+  .eventsBox__Table_Row{
+    text-align: center;
+    
+  }
+  .eventsBox__Table__Row__Button{
+    margin-right: 5%;
+  }
+  
+  /* Add Events Box Styling */
+  .addBox{  
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    width: 48%;
+    height: 55%;
+    border-style: solid;
+    border-width: medium;
+  }
+  .addBox__title{
+    text-align: center;
+  }
+  .addBox__content{
+    padding-left: 2%;
+  }
+  .addBox input{
+    width: 50%;
+    padding: 1.2%;
+  }
+  
+  /* GMU Events Button Styling */
+  .gmuEventsButton{
+    position: absolute;
+    left: 46%;
+    top: 36%;
+  }
+  
+  .LogoutButton{
+    position: absolute;
+    left: 90%;
+    top: 5%;
+  }

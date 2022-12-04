@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
-import './HomePage.css';
+import { Link } from "react-router-dom";
+import './App.css';
 import EventsTable from "./EventsTable";
 
 export default function HomePage(){
-    /* Get the current date for the calendar */
+  /* Get the current date for the calendar */
   const [selectedDay, setSelectedDay] = useState(new Date());
   const splitSelectedDay = selectedDay.toString().split(" ").slice(0, 4);
   const [stringSelectedDay, setStringSelectedDay] = useState(splitSelectedDay.map( (word) => word = word + " "));
@@ -73,6 +74,7 @@ export default function HomePage(){
 
     {/* HTML for GMU Events Button */}
     <button onClick={() => gmuEvents()} class="gmuEventsButton">GMU Events</button>
+    <button class="LogoutButton"><Link to="/">Logout</Link> </button>
     </>
     );
 }

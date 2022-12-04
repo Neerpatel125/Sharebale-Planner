@@ -1,31 +1,28 @@
-import React, {useState} from "react";
-import './Login.css';
+import React from "react";
 import {Link} from 'react-router-dom';
-function LoginPage1 ()
+import "./App.css"
+function RegisterPage1 ()
 {
-    const handlesubmit = (event)=>{
-        event.preventDefault();
-    }
     return (
+       
         <div className ="login-page1">
             <div className ="row">
                 <div className ="col-md-6 d-flex align-items-center justify-content-center">
                     <div className = "text-part d-flex flex-column">
-                        <h1>LOGIN</h1>
-                        <form onSubmit = {handlesubmit}>
-                            <div className="userName1">
-                            {/* <label for="email">userName</label> */}
-                            <input type="text" placeholder='User Name' id="account1"/>
-                            </div>
-                            <div className ="password1">
-                            {/* <label for="pwd1">Password</label> */}
-                            <input type="password" placeholder='Password' id="pwd1"/>
-                            </div>
-                            <button>Login</button>
-                            </form>
-                            <div className = "d-flex justify-content-between">
-                                <p>Not a member yet?   <Link to='/Register'>Register</Link> </p>
-                        
+                        <h1>REGISTER</h1>
+                         {/* <label for="email">Email </label> */}
+                            <input type="email" placeholder='Email Adress' id="email2"/>
+                            <div className="email2">  
+                        {/* <label for="email">UserName </label> */}
+                             <input type="text" placeholder='User Name' id="userName2"/>
+                          </div> <div className="userName2">
+                        {/* <label for="email">Password </label> */}
+                        <input type="password" placeholder='Password' id="pwd2"/>
+                        </div>
+                        <button>Submit</button>
+                        <div className = "d-flex align-items-center justify-content-between">
+                           
+                            <p>Already a menber?  <Link to='/'>Login Here</Link></p>
                         </div>
                     </div>
                 </div>
@@ -42,4 +39,4 @@ function LoginPage1 ()
     )
 }
 
-export default LoginPage1
+export default RegisterPage1
