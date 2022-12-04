@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import './HomePage.css';
-import EventsList from "./EventsList";
+import EventsTable from "./EventsTable";
 
 export default function HomePage(){
     /* Get the current date for the calendar */
@@ -51,7 +51,7 @@ export default function HomePage(){
       <div class="eventsBox__title">
         <h2>Events for {stringSelectedDay}</h2>
       </div>
-      <EventsList events={myEvents} setEvents={setMyEvents}/>
+      <EventsTable events={myEvents} setEvents={setMyEvents}/>
     </div>
 
     {/* HTML for the Add Events Box */}
