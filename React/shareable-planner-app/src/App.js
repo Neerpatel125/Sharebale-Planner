@@ -7,24 +7,6 @@ import RegisterPage1 from './Register';
 
 
 function App() { 
-  
-  //  How to get things from the backend. To put things, change "Get" to "Put"
-  /*
-  const [data, setData] = useState(); 
-  async function getPersons(){
-    const response = await fetch("/persons", {
-      method: "Get",
-      headers: {
-        "Accept": "application/json", 
-        "Content-Type": "application/json"
-      },
-    });
-    const body = await response.json();
-    setData(body);
-  }
-  getPersons();
-  console.log(data); 
-  */
 
   return(
     <Router>

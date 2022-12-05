@@ -5,6 +5,24 @@ import './App.css';
 import EventsTable from "./EventsTable";
 
 export default function HomePage(){
+  
+  //  How to get things from the backend. To put things, change "Get" to "Put"
+  /*
+  const [data, setData] = useState(); 
+  async function getPersons(){
+    const response = await fetch("/persons", {
+      method: "Get",
+      headers: {
+        "Accept": "application/json", 
+        "Content-Type": "application/json"
+      },
+    });
+    const body = await response.json();
+    setData(body);
+  }
+  getPersons(); 
+  */
+  
   /* Get the current date for the calendar */
   const [selectedDay, setSelectedDay] = useState(new Date());
   const splitSelectedDay = selectedDay.toString().split(" ").slice(0, 4);
