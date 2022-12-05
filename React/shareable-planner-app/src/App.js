@@ -7,6 +7,12 @@ import RegisterPage1 from './Register';
 
 
 function App() {
+  // const url = "http://localhost:8080"; 
+  
+  const response = fetch("/persons");  
+  const body = response.json(); 
+  console.log(body);
+  
   return(
     <Router>
           <Switch>
