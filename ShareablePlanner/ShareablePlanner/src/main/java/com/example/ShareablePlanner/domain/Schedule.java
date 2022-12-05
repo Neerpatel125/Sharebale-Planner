@@ -26,15 +26,15 @@ public class Schedule {
 	@Column(name = "SCHEDULE_DESCRIPTION")
 	private String description;
 	@Column(name = "YMD")
-	private Date date;
+	private String date;
 	@Column(name = "TIME")
-	private Time time;
+	private String time;
 	@Column(name = "SCHEDULE_NAME")
 	private String name;
 	
 	public Schedule() {}
 	
-	public Schedule( Person personId, String description, Date date, Time time, String name) {
+	public Schedule( Person personId, String description, String date, String time, String name) {
 		this.personId = personId;
 		this.description = description;
 		this.date = date;
@@ -58,19 +58,19 @@ public class Schedule {
 		this.name = name;
 	}
 	
-	public Date getDate() {
+	public String getDate() {
 		return this.date;
 	}
 	
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	
-	public Time getTime() {
+	public String getTime() {
 		return this.time;
 	}
 	
-	public void setTime(Time time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 	

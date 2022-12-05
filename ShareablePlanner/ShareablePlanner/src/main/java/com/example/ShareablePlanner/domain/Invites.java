@@ -28,17 +28,13 @@ public class Invites {
 	@OneToOne
 	@JoinColumn(name = "SCHEDULE_ID")
 	private Schedule schedule;
-	@OneToOne
-	@JoinColumn(name = "STATUS_ID")
-	private Status status;
 	
 	public Invites() {}
 	
-	public Invites(Person inviter, Person invitee, Schedule schedule, Status status) {
+	public Invites(Person inviter, Person invitee, Schedule schedule) {
 		this.inviter = inviter;
 		this.invitee = invitee;
 		this.schedule = schedule;
-		this.status = status;
 	}
 	
 	public Long getId() {
@@ -73,14 +69,6 @@ public class Invites {
 		this.schedule = schedule;
 	}
 	
-	public Status getStatus() {
-		return this.status;
-	}
-	
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-	
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -89,17 +77,17 @@ public class Invites {
 	    	return false;
 	    Invites invites = (Invites) o;
 	    return Objects.equals(this.id, invites.id) && Objects.equals(this.invitee, invites.invitee)
-	        && Objects.equals(this.inviter, invites.inviter) && Objects.equals(this.schedule, invites.schedule) && Objects.equals(this.status, invites.status);
+	        && Objects.equals(this.inviter, invites.inviter) && Objects.equals(this.schedule, invites.schedule);
 	}
 	@Override
 	public int hashCode() {
-	    return Objects.hash(this.id, this.inviter, this.invitee, this.schedule, this.status);
+	    return Objects.hash(this.id, this.inviter, this.invitee, this.schedule);
 	}
 	
 	@Override
 	public String toString() {
 	    return "Invites{" + "id=" + this.id + '\'' + ", Inviter='" + this.inviter + '\'' + ", Invitee=" + this.invitee
-	    		+ '\'' + ", schedule" + this.schedule + '\'' + ", status=" + this.status 
+	    		+ '\'' + ", schedule" + this.schedule
 	    		+ '\'' + '}';
 	}
 }

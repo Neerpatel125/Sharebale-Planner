@@ -82,7 +82,6 @@ public class InvitesController {
 					invites.setInviter(newInvites.getInviter());
 					invites.setInvitee(newInvites.getInvitee());
 					invites.setSchedule(newInvites.getSchedule());
-					invites.setStatus(newInvites.getStatus());
 					return inviteRepository.save(invites);
 				})
 				.orElseGet(() -> {

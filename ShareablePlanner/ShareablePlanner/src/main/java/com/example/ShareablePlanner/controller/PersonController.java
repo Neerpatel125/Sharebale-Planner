@@ -51,20 +51,31 @@ public class PersonController {
 				.body(entityModel);
 	}
 	
-	@GetMapping("/persons/{id}")
+	@GetMapping("/persons/id/{id}")
 	public EntityModel<Person> one(@PathVariable Long id){
 		Person person = personRepository.findById(id)
 				.orElseThrow(() -> new PersonNotFoundException(id));
 		return personAssembler.toModel(person);
 	}
 	
+	@GetMapping("/persons/userName/{userName}")
+	public List<Person> allUserName(@PathVariable String userName){
+		List<Person> persons = personRepository.findByUserName(userName);
+		return persons;
+	}
+	
+	@GetMapping("/persons/password/{password}")
+	public List<Person> allPassword(@PathVariable String password){
+		List<Person> persons = personRepository.findByPassword(password);
+		return persons;
+	}
+	
 	@PutMapping("/persons/{id}")
 	public ResponseEntity<Object> replacePerson(@RequestBody Person newPerson, @PathVariable Long id){
 		Person updatedPerson = personRepository.findById(id)
 				.map(person -> {
-					person.setName(newPerson.getName());
-					person.setPhoneNumber(newPerson.getPhoneNumber());
-					person.setEmail(newPerson.getEmail());
+					person.setUserName(newPerson.getUserName());
+					person.setPassword(newPerson.getPassword());
 					return personRepository.save(person);
 				})
 				.orElseGet(() -> {
