@@ -19,10 +19,10 @@ export default function HomePage(){
     });
     const body = await response.json();
     setData(body);
+    console.log(body);
   }
-  getPersons(); 
   */
-  
+
   /* Get the current date for the calendar */
   const [selectedDay, setSelectedDay] = useState(new Date());
   const splitSelectedDay = selectedDay.toString().split(" ").slice(0, 4);
@@ -55,6 +55,11 @@ export default function HomePage(){
   
   return(
     <>
+    {/* 
+      This line is to text the information obtained from the Backend Fetch. 
+      <button onClick={getPersons}>Testing Backend Connection</button> 
+    */}
+    
     {/* HTML for the Title */}
     <h1 class = "Title">Shareable Planner</h1>
 
