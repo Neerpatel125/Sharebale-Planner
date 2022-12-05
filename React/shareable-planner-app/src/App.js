@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import './App.css';
 import HomePage from "./HomePage"
 import {BrowserRouter as Router, Switch, Route, Link} from'react-router-dom';
@@ -6,13 +6,26 @@ import LoginPage1 from './Login';
 import RegisterPage1 from './Register';
 
 
-function App() {
-  // const url = "http://localhost:8080"; 
+function App() { 
   
-  const response = fetch("/persons");  
-  const body = response.json(); 
-  console.log(body);
-  
+  //  How to get things from the backend. To put things, change "Get" to "Put"
+  /*
+  const [data, setData] = useState(); 
+  async function getPersons(){
+    const response = await fetch("/persons", {
+      method: "Get",
+      headers: {
+        "Accept": "application/json", 
+        "Content-Type": "application/json"
+      },
+    });
+    const body = await response.json();
+    setData(body);
+  }
+  getPersons();
+  console.log(data); 
+  */
+
   return(
     <Router>
           <Switch>
