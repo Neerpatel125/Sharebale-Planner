@@ -16,6 +16,9 @@ function RegisterPage1 ()
     }
 
     async function handleSubmitButton(){
+        if (enteredEmail === "" || enteredUserName === "" || enteredPassword === ""){
+            return;
+        } 
         const person = {
             userName: enteredUserName, 
             password: enteredPassword, 
