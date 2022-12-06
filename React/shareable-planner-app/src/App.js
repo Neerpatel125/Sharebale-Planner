@@ -21,7 +21,7 @@ function App() {
               {/* <Link to='/'>Login</Link> */}
             </Route>
             <Route path="/Home">
-              <HomePage/>
+              <HomePage myPersonID={myPersonID}/>
               {/* <Link to="/Home">Home</Link>} */}
             </Route>
           </Switch>
