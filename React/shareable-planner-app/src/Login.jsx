@@ -23,6 +23,9 @@ function LoginPage1 (setPersonID)
     }
 
     async function handleLoginButton(){
+        if (enteredUserName === "" || enteredPassword === ""){
+            return; 
+        }
         const person = await fetchFromPersons(enteredUserName);
         if (person.password === enteredPassword){
             setPersonID(person[0].id);
