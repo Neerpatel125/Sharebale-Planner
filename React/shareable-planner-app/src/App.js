@@ -7,12 +7,13 @@ import RegisterPage1 from './Register';
 
 
 function App() { 
+  const [myPersonID, setPersonID] = useState();
 
   return(
     <Router>
           <Switch>
             <Route path="/" exact>
-              <LoginPage1/>
+              <LoginPage1 myPersonID={myPersonID} setPersonID={setPersonID}/>
               {/* <Link to='/Register'>Register</Link> */}
             </Route>
             <Route path="/Register">

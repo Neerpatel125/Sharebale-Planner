@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import './App.css';
 import EventsTable from "./EventsTable";
 
-export default function HomePage(){
+export default function HomePage(myPersonID){
   
   //  How to get things from the backend. To put things, change "Get" to "Put"
   
   const [data, setData] = useState(); 
-  async function getPersons(){
-    const response = await fetch("/persons", {
+  async function getPersons(userName){
+    const response = await fetch("/persons" + "/" + userName, {
       method: "Get",
       headers: {
         "Accept": "application/json", 
@@ -19,9 +19,9 @@ export default function HomePage(){
     });
     const body = await response.json();
     setData(body);
-    console.log(body._embedded.personList[0].userName);
+    console.log(body);
   }
-  
+  */
 
   /* Get the current date for the calendar */
   const [selectedDay, setSelectedDay] = useState(new Date());
@@ -55,8 +55,10 @@ export default function HomePage(){
   
   return(
     <>
+    {/* 
+      This line is to text the information obtained from the Backend Fetch. 
       <button onClick={getPersons}>Testing Backend Connection</button> 
-  
+    */}
     
     {/* HTML for the Title */}
     <h1 class = "Title">Shareable Planner</h1>
