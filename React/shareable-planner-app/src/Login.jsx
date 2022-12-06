@@ -1,11 +1,40 @@
 import React, {useState} from "react";
 import './App.css';
-import {Link} from 'react-router-dom';
-function LoginPage1 (myPersonID, setPersonID)
+import {Link, useHistory} from 'react-router-dom';
+
+function LoginPage1 (setPersonID)
 {
+    const history = useHistory(); 
+
     const handlesubmit = (event)=>{
         event.preventDefault();
     }
+
+    async function fetchFromPersons(userName){
+        const response = await fetch("/persons/userName/" + userName, {
+          method: "Get",
+          headers: {
+            "Accept": "application/json", 
+            "Content-Type": "application/json"
+          },
+        });
+        const body = await response.json();
+        return body; 
+    }
+
+    async function handleLoginButton(){
+        const person = await fetchFromPersons(enteredUserName);
+        if (person.password === enteredPassword){
+            setPersonID(person[0].id);
+            history.push("/Home")
+        }
+        else{
+            alert("Incorrect username or password.");
+        }
+    }
+
+    const [enteredUserName, setEnteredUserName] = useState("");
+    const [enteredPassword, setEnteredPassword] = useState(""); 
     return ( 
         <div className ="login-page1">
             <div className ="row">
@@ -15,13 +44,13 @@ function LoginPage1 (myPersonID, setPersonID)
                         <form onSubmit = {handlesubmit}>
                             <div className="userName1">
                             {/* <label for="email">userName</label> */}
-                            <input type="text" placeholder='User Name' id="account1"/>
+                            <input onChange={(e) => setEnteredUserName(e.target.value)} value={enteredUserName} type="text" placeholder='User Name' id="account1"/>
                             </div>
                             <div className ="password1">
                             {/* <label for="pwd1">Password</label> */}
-                            <input type="password" placeholder='Password' id="pwd1"/>
+                            <input onChange={(e) => setEnteredPassword(e.target.value)} value={enteredPassword} type="password" placeholder='Password' id="pwd1"/>
                             </div>
-                            <button><Link to="/Home">Login</Link></button>
+                            <button onClick={handleLoginButton}>Login</button>
                             </form>
                             <div className = "d-flex justify-content-between">
                                 <p>Not a member yet?   <Link to='/Register'>Register</Link> </p>

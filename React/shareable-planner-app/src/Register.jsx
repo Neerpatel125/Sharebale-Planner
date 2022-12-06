@@ -1,25 +1,50 @@
-import React from "react";
+import React, { useState }from "react";
 import {Link} from 'react-router-dom';
 import "./App.css"
+
 function RegisterPage1 ()
 {
+    async function sendToPersons(person){
+        await fetch("/persons", {
+          method: "Post",
+          headers: {
+            "Accept": "application/json", 
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(person),
+        });
+    }
+
+    async function handleSubmitButton(){
+        const person = {
+            userName: enteredUserName, 
+            password: enteredPassword, 
+            email: enteredEmail
+        };
+        await sendToPersons(person);
+        alert("Account Created!"); 
+    }
+
+    const [enteredUserName, setEnteredUserName] = useState("");
+    const [enteredPassword, setEnteredPassword] = useState(""); 
+    const [enteredEmail, setEnteredEmail] = useState("");
+    
     return (
-       
         <div className ="login-page1">
             <div className ="row">
                 <div className ="col-md-6 d-flex align-items-center justify-content-center">
                     <div className = "text-part d-flex flex-column">
                         <h1>REGISTER</h1>
                          {/* <label for="email">Email </label> */}
-                            <input type="email" placeholder='Email Adress' id="email2"/>
+                            <input onChange={(e) => setEnteredEmail(e.target.value)} value={enteredEmail} type="email" placeholder='Email Adress' id="email2"/>
                             <div className="email2">  
                         {/* <label for="email">UserName </label> */}
-                             <input type="text" placeholder='User Name' id="userName2"/>
+                             <input onChange={(e) => setEnteredUserName(e.target.value)} value={enteredUserName} type="text" placeholder='User Name' id="userName2"/>
                           </div> <div className="userName2">
                         {/* <label for="email">Password </label> */}
-                        <input type="password" placeholder='Password' id="pwd2"/>
+                        <input onChange={(e) => setEnteredPassword(e.target.value)} value={enteredPassword} type="password" placeholder='Password' id="pwd2"/>
                         </div>
-                        <button>Submit</button>
+                        <button onClick={handleSubmitButton}>Submit</button>
                         <div className = "d-flex align-items-center justify-content-between">
                            
                             <p>Already a menber?  <Link to='/'>Login Here</Link></p>

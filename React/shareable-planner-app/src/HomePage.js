@@ -68,7 +68,7 @@ export default function HomePage(myPersonID){
   }
 
   async function sendToSchedule(event){
-    const response = await fetch("/schedules", {
+    await fetch("/schedules", {
       method: "Post",
       headers: {
         "Accept": "application/json", 
@@ -79,7 +79,7 @@ export default function HomePage(myPersonID){
   }
 
   async function sendToInvites(invite){
-    const response = await fetch("/invites", {
+    await fetch("/invites", {
       method: "Post",
       headers: {
         "Accept": "application/json", 
@@ -89,10 +89,9 @@ export default function HomePage(myPersonID){
     });
   }
 
-  // Note: Need to remove all invites with this schedule ID before you can remove it. 
   async function removeFromSchedule(scheduleID){ 
     await removeFromInvites(scheduleID);
-    const response = await fetch("/schedules/" + scheduleID, {
+    await fetch("/schedules/" + scheduleID, {
       method: "Delete",
       headers: {
         "Accept": "application/json", 
@@ -104,7 +103,7 @@ export default function HomePage(myPersonID){
   async function removeFromInvites(scheduleID){
     const allInvites = await fetchFromInvitesByScheduileId(scheduleID);
     for (const elem in allInvites){
-      const response = await fetch("/invites/" + allInvites[elem].id, {
+      await fetch("/invites/" + allInvites[elem].id, {
         method: "Delete",
         headers: {
           "Accept": "application/json", 
@@ -114,42 +113,80 @@ export default function HomePage(myPersonID){
     }
   }
 
-
   /* Get the current date for the calendar */
   const [selectedDay, setSelectedDay] = useState(new Date());
   const splitSelectedDay = selectedDay.toString().split(" ").slice(0, 4);
   const [stringSelectedDay, setStringSelectedDay] = useState(splitSelectedDay.map( (word) => word = word + " ").join().replaceAll(",", ""));
+  
   /* Open the GMU events website function */
   const gmuEvents = () => {
     window.open("https://mason360.gmu.edu/events", "_blank");
   }
+  
   /* Store input information for adding events */
+  
+  async function getTodaysEvents(){
+    // Get all events for this user for today from Schedule
+    const thisDayEvents= await fetchFromSchedule(stringSelectedDay, myPersonID);
+    // Get all events this user is invited to for today
+    const allInvited = await fetchFromInvites(myPersonID);
+    const allInvitedEvents = allInvited.map((e) => e.schedule);
+    // Combine the two lists of events
+    const allThisDayEvents = thisDayEvents.concat(allInvitedEvents);
+    // Set myEvents to today's events.
+    if (allThisDayEvents.length < 1){
+      setMyEvents([]);
+    }
+    else{
+      setMyEvents(allThisDayEvents);
+    } 
+  }
+
   const [eventName, setEventName] = useState("");
   const [eventTime, setEventTime] = useState("");
   const [eventInvites, setEventInvites] = useState("");
-  const [myEvents, setMyEvents] = useState([]); /* Temporary, since currently cannot add to database */
+  const [myEvents, setMyEvents] = useState([]);
+  getTodaysEvents();
 
-  function handleAddEvent(){
-    // const thisDayEvents = fetchFromSchedule(stringSelectedDay, myPersonID);
-
-    /* Currently just adds the events to myEvents list, but should send them to the database */
-    const event = {eventName, eventTime, eventInvites};
+  async function handleAddEvent(){
+    const event = {
+      personId: {
+        "id": myPersonID, 
+      },
+      date: stringSelectedDay, 
+      time: eventTime, 
+      name: eventName
+    };
+    // Add the event to Schedules Table
+    await sendToSchedule(event);
+    // Now the invites
+    const scheduleId = await fetchFromScheduleToGetId(event);
+    const peopleToInvite = eventInvites.split(","); 
+    for(let i = 0; i < peopleToInvite.length; i++){
+      const inviteeId = fetchFromPersons(peopleToInvite[i]).id; 
+      await sendToInvites({inviter: {"id": myPersonID}, invitee: {"id": inviteeId}, scheduleId: {"id": scheduleId}}); 
+    }
+    // Add the event to myEvents
     setMyEvents((prevEvents) =>{
       return [...prevEvents, event];
     });
   }
-  /* Updates stringSelectedDay whenver selectedDay changes.  
-    Note: When selectedDay changes, you should load the events for the new day from the databse into myEvents,
-    then <EventsList events={myEvents}/> will update the list to display events for the new day upon re-rendering. 
-  */
+  // Updates stringSelectedDay whenver selectedDay changes.  
   useEffect(() => {
     const splitSelectedDay = selectedDay.toString().split(" ").slice(0, 4);
     setStringSelectedDay(splitSelectedDay.map( (word) => word = word + " ").join().replaceAll(",", ""));
   }, [selectedDay]);
 
+  // When the stringSelected day changes, load the events for this new day into myEvents.
+  // This will cause the EventsBox to update and display the correct events.  
+  useEffect( () => {
+    getTodaysEvents(); 
+  }, // eslint-disable-next-line
+  [stringSelectedDay]);
+
   return(
     <> 
-    {/*
+    {/* These are some test cases to ensure that the fetch methods work. 
     <button onClick={() => sendToSchedule({personId: {"id": 1}, date: stringSelectedDay, time: "12-2", name: "testingAdding"})}>Adding</button> 
     <button onClick={() => sendToInvites({inviter: {"id": 1}, invitee: {"id": 3}, schedule: {"id": 1}})}>Inviting</button>
     <button onClick={() => fetchFromSchedule("10 4 2022", 2) }>Getting an Event</button>
@@ -175,7 +212,8 @@ export default function HomePage(myPersonID){
       <div class="eventsBox__title">
         <h2>Events for {stringSelectedDay}</h2>
       </div>
-      <EventsTable events={myEvents} setEvents={setMyEvents}/>
+      <EventsTable events={myEvents} setEvents={setMyEvents} removeFromSchedule={removeFromSchedule}
+        fetchFromInvitesByScheduileId={fetchFromInvitesByScheduileId}/>
     </div>
 
     {/* HTML for the Add Events Box */}
