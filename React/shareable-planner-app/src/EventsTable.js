@@ -1,7 +1,7 @@
 import React from "react";
 import EventsTableRow from "./EventsTableRow";
 
-export default function EventsTable( {events, setEvents, removeFromSchedule, fetchFromInvitesByScheduileId} ){
+export default function EventsTable( {events, setEvents, removeFromSchedule, eventsInvites, setEventsInvites} ){
     return(
         <table class="eventsBox__Table">
             <thead class="eventsBox__Table__Head">
@@ -13,7 +13,7 @@ export default function EventsTable( {events, setEvents, removeFromSchedule, fet
                 {events.map((event, index) => {
                     return <EventsTableRow key={index} index={index} events={events} event={event} 
                         setMyEvents={setEvents} removeFromSchedule={removeFromSchedule} 
-                        fetchFromInvitesByScheduileId={fetchFromInvitesByScheduileId} />            
+                        eventsInvites={eventsInvites} setEventsInvites={setEventsInvites}/>            
                 })}
             </tbody>
         </table>

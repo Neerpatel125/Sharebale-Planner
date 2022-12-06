@@ -1,19 +1,15 @@
 import React from "react";
 
-export default function EventsTableRow( {event, index, events, setMyEvents, removeFromSchedule, fetchFromInvitesByScheduileId} ){
-    
+export default function EventsTableRow( {event, index, events, setMyEvents, removeFromSchedule, eventsInvites, setEventsInvites } ){
+
     async function handleOnClick(){
         // Remove the event from the Schedule Table
-        await removeFromSchedule(event); 
+        await removeFromSchedule(event.id); 
         // Remove the event from myEvents
         events = events.slice(0, index).concat(events.slice(index+1, events.length));
-        setMyEvents(events); 
-    }
-    async function getAllInvited(){
-        const allInvites = await fetchFromInvitesByScheduileId(event.id);
-        const allInvited = allInvites.map((e) => e.invitee.userName + " "); 
-        const invitedString = allInvited.join().replaceAll(",", "");
-        return invitedString; 
+        setMyEvents(events);
+        eventsInvites = eventsInvites.slice(0, index).concat(eventsInvites.slice(index+1, eventsInvites.length));
+        setEventsInvites(eventsInvites);
     }
 
     return(
@@ -24,7 +20,7 @@ export default function EventsTableRow( {event, index, events, setMyEvents, remo
             </td>
             <td>{event.time}</td>
             <td>
-                {getAllInvited()}
+                {eventsInvites[index]}
             </td>
         </tr>
     );

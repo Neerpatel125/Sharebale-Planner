@@ -29,7 +29,7 @@ function LoginPage1 ( {setPersonID} )
         try{
             const person = await fetchFromPersons(enteredUserName);
             if (person[0].password === enteredPassword){
-                setPersonID(person[0].id);
+                await setPersonID(person[0].id);
                 history.push("/Home")
             }
             else{

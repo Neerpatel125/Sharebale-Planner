@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import './App.css';
 import EventsTable from "./EventsTable";
 
-export default function HomePage( {myPersonID} ){
+export default function HomePage( {myPersonID, setPersonID} ){
 
   async function fetchFromSchedule(dayString, personID){
     const response = await fetch("/schedules/" + dayString + "/" + personID, {
@@ -56,15 +56,20 @@ export default function HomePage( {myPersonID} ){
   }
 
   async function fetchFromInvitesByScheduileId(scheduleId){
-    const response = await fetch("/invites/schedule/" + scheduleId, {
-      method: "Get",
-      headers: {
-        "Accept": "application/json", 
-        "Content-Type": "application/json"
-      },
-    });
-    const body = await response.json();
-    return body;
+    try{
+      const response = await fetch("/invites/schedule/" + scheduleId, {
+        method: "Get",
+        headers: {
+          "Accept": "application/json", 
+          "Content-Type": "application/json"
+        },
+      });
+      const body = await response.json();
+      return body;
+    }
+    catch(e){
+      return; 
+    }
   }
 
   async function sendToSchedule(event){
@@ -101,15 +106,20 @@ export default function HomePage( {myPersonID} ){
   }
 
   async function removeFromInvites(scheduleID){
-    const allInvites = await fetchFromInvitesByScheduileId(scheduleID);
-    for (const elem in allInvites){
-      await fetch("/invites/" + allInvites[elem].id, {
-        method: "Delete",
-        headers: {
-          "Accept": "application/json", 
-          "Content-Type": "application/json"
-        },
+    try{
+      const allInvites = await fetchFromInvitesByScheduileId(scheduleID);
+      for (const elem in allInvites){
+        await fetch("/invites/" + allInvites[elem].id, {
+          method: "Delete",
+          headers: {
+            "Accept": "application/json", 
+            "Content-Type": "application/json"
+         },
       });
+    }
+    }
+    catch(error){
+      return; 
     }
   }
 
@@ -124,10 +134,22 @@ export default function HomePage( {myPersonID} ){
   }
   
   /* Store input information for adding events */
-  
+ 
+
+  async function getInvitesString(event){
+    const allInvites = await fetchFromInvitesByScheduileId(event.id);
+    const allInvited = allInvites.map((e) => e.invitee.userName + " "); 
+    const invitedString = allInvited.join();
+    return invitedString; 
+  }
+
   async function getTodaysEvents(){
     // Get all events for this user for today from Schedule
     const thisDayEvents= await fetchFromSchedule(stringSelectedDay, myPersonID);
+    if (thisDayEvents.status === 400){
+      setMyEvents([])
+      setEventInvites([]);
+    }
     // Get all events this user is invited to for today
     const allInvited = await fetchFromInvites(myPersonID);
     const allInvitedEvents = allInvited.map((e) => e.schedule);
@@ -135,10 +157,13 @@ export default function HomePage( {myPersonID} ){
     const allThisDayEvents = thisDayEvents.concat(allInvitedEvents);
     // Set myEvents to today's events.
     if (allThisDayEvents.length < 1){
-      setMyEvents([]);
+      setMyEvents([])
+      setEventInvites([]);
     }
     else{
       setMyEvents(allThisDayEvents);
+      const temp = allThisDayEvents.map((e) => getInvitesString(e));
+      setEventInvites(temp); 
     } 
   }
 
@@ -146,7 +171,8 @@ export default function HomePage( {myPersonID} ){
   const [eventTime, setEventTime] = useState("");
   const [eventInvites, setEventInvites] = useState("");
   const [myEvents, setMyEvents] = useState([]);
-  getTodaysEvents();
+
+  const [myEventsInvites, setMyEventsInvites] = useState([]);
 
   async function handleAddEvent(){
     const event = {
@@ -161,16 +187,35 @@ export default function HomePage( {myPersonID} ){
     await sendToSchedule(event);
     // Now the invites
     const scheduleId = await fetchFromScheduleToGetId(event);
-    const peopleToInvite = eventInvites.split(","); 
-    for(let i = 0; i < peopleToInvite.length; i++){
-      const inviteeId = fetchFromPersons(peopleToInvite[i]).id; 
-      await sendToInvites({inviter: {"id": myPersonID}, invitee: {"id": inviteeId}, scheduleId: {"id": scheduleId}}); 
+    const peopleToInvite = eventInvites.split(",").map((e) => e.trim());
+    if (peopleToInvite[0] !== ""){
+      for(let i = 0; i < peopleToInvite.length; i++){
+        const inviteePerson = await fetchFromPersons(peopleToInvite[i]);
+        const inviteeId = inviteePerson[0].id;   
+        const theInvite = {
+          inviter: {"id": myPersonID}, 
+          invitee: {"id": inviteeId}, 
+          schedule: {"id": scheduleId},
+        }
+        await sendToInvites(theInvite); 
+      } 
     }
     // Add the event to myEvents
     setMyEvents((prevEvents) =>{
       return [...prevEvents, event];
     });
+    // Add the event's invites to myEventInvites
+    setMyEventsInvites ( (prevInvites) => {
+      return [...prevInvites, eventInvites]
+    });
   }
+
+  const history = useHistory(); 
+  async function handleLogoutButton(){
+    await setPersonID(null); 
+    history.push("/");
+  }
+
   // Updates stringSelectedDay whenver selectedDay changes.  
   useEffect(() => {
     const splitSelectedDay = selectedDay.toString().split(" ").slice(0, 4);
@@ -213,8 +258,8 @@ export default function HomePage( {myPersonID} ){
       <div class="eventsBox__title">
         <h2>Events for {stringSelectedDay}</h2>
       </div>
-      <EventsTable events={myEvents} setEvents={setMyEvents} removeFromSchedule={removeFromSchedule}
-        fetchFromInvitesByScheduileId={fetchFromInvitesByScheduileId}/>
+      <EventsTable events={myEvents} setEvents={setMyEvents} removeFromSchedule={removeFromSchedule} 
+        eventsInvites={myEventsInvites} setEventsInvites={setMyEventsInvites}/>
     </div>
 
     {/* HTML for the Add Events Box */}
@@ -236,7 +281,7 @@ export default function HomePage( {myPersonID} ){
 
     {/* HTML for GMU Events Button */}
     <button onClick={() => gmuEvents()} class="gmuEventsButton">GMU Events</button>
-    <button class="LogoutButton"><Link to="/">Logout</Link> </button>
+    <button class="LogoutButton" onClick={handleLogoutButton}>Logout</button>
     </div>
     </>
     );
