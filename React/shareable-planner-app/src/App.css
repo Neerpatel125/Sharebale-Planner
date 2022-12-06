@@ -6,19 +6,18 @@
     overflow-x: hidden;
     overflow-y: hidden;
 }
-
 .login-page1 .row {
     height: 150%;
 }
 
 .text-part {   
     width: 70%;
-    padding: 5px;
+    padding: 1%;
     margin:100px;
 }
 
 .login-page1 input {
-    margin-top: 15px;
+    margin-top: 1%;
     height: 50px;
     width: 50%;
 }
@@ -26,19 +25,19 @@
 .login-page1 button {
     font-size:20px;
     height: 50px;
-    margin-top: 15px;
+    margin-top: 1%;
     width: 50%;
     background-color: brown;
     color: white;
 }
 
 .login-page1 h1 {
-    font-size: 60px;
+    font-size: 280%;
     color: transparent;
     -webkit-text-stroke-width: 2px;
     -webkit-text-stroke-color: brown;
     font-weight:bold;
-    margin: 30px 200px;
+    margin: 1% 17%;
     
 }
 .login-page1 a{
@@ -55,8 +54,10 @@
     height: 38px; */
 }
 .login-page1-rectangle{
-    width: 980px;
+    /* width: 980px; */
+    width: 60%;
     height: 260vh;
+    /* height:60%; */
     background-color:brown;
     position: absolute;
     right:-400px;
@@ -73,7 +74,7 @@
     text-align: center;
   }
   
-  body{
+  .HomePage body{
     background-color: lightblue;
   }
   

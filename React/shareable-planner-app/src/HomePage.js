@@ -198,6 +198,7 @@ export default function HomePage(myPersonID){
     */}
 
     {/* HTML for the Title */}
+    <div class className="HomePage">
     <h1 class = "Title">Shareable Planner</h1>
 
     {/* HTML for the Calendar */}
@@ -236,6 +237,7 @@ export default function HomePage(myPersonID){
     {/* HTML for GMU Events Button */}
     <button onClick={() => gmuEvents()} class="gmuEventsButton">GMU Events</button>
     <button class="LogoutButton"><Link to="/">Logout</Link> </button>
+    </div>
     </>
     );
 }
