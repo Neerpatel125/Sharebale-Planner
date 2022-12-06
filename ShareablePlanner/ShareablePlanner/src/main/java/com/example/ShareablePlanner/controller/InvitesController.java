@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ShareablePlanner.domain.Invites;
 import com.example.ShareablePlanner.domain.Person;
+import com.example.ShareablePlanner.domain.Schedule;
 import com.example.ShareablePlanner.exception.InvitesNotFoundException;
 import com.example.ShareablePlanner.exception.PersonNotFoundException;
 import com.example.ShareablePlanner.model.InvitesModelAssembler;
@@ -78,6 +79,12 @@ public class InvitesController {
 	@GetMapping("/invites/invitee/{inviteeId}")
 	public List<Invites> allInviteeId(@PathVariable Person inviteeId){
 		List<Invites> invites = inviteRepository.findByInvitee(inviteeId);
+		return invites;
+	}
+	
+	@GetMapping("/invites/schedule/{scheduleId}")
+	public List<Invites> allScheduleId(@PathVariable Schedule scheduleId){
+		List<Invites> invites = inviteRepository.findBySchedule(scheduleId);
 		return invites;
 	}
 	

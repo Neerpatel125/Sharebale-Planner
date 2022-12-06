@@ -5,12 +5,9 @@ import './App.css';
 import EventsTable from "./EventsTable";
 
 export default function HomePage(myPersonID){
-  
-  //  How to get things from the backend. To put things, change "Get" to "Put"
-  /*
-  const [data, setData] = useState(); 
-  async function getPersons(userName){
-    const response = await fetch("/persons" + "/" + userName, {
+
+  async function fetchFromSchedule(dayString, personID){
+    const response = await fetch("/schedules/" + dayString + "/" + personID, {
       method: "Get",
       headers: {
         "Accept": "application/json", 
@@ -18,26 +15,11 @@ export default function HomePage(myPersonID){
       },
     });
     const body = await response.json();
-    setData(body);
-    console.log(body._embedded.personList[0].userName)
-  }
-  */
-
-  async function fetchFromSchedule(dayString, myPersonID){
-    const response = await fetch("/schedules/" + dayString + "/" + myPersonID, {
-      method: "Get",
-      headers: {
-        "Accept": "application/json", 
-        "Content-Type": "application/json"
-      },
-    });
-    const body = await response.json();
-    console.log(body);
-    return body._embedded; 
+    return body; 
   }
 
-  async function fetchFromScheduleID(event){
-    const url = "/schedules/" + event.personID + "/" + event.date + "/" + event.time + "/" + event.name
+  async function fetchFromScheduleToGetId(e){
+    const url = "/schedules/" + e.personId["id"] + "/" + e.date + "/" + e.time + "/" + e.name; 
     const response = await fetch(url, {
       method: "Get",
       headers: {
@@ -46,8 +28,7 @@ export default function HomePage(myPersonID){
       },
     });
     const body = await response.json();
-    console.log(body);
-    // return body._embdedded.eventsList.ID? 
+    return body["id"];
   }
 
   async function fetchFromInvites(inviteeID){
@@ -59,50 +40,85 @@ export default function HomePage(myPersonID){
       },
     });
     const body = await response.json();
-    console.log(body);
-    // return body._embedded; 
+    return body; 
   }
 
-  async function fetchFromPersons(personID){
-    const response = await fetch("/persons/id/" + personID, {
+  async function fetchFromPersons(userName){
+    const response = await fetch("/persons/userName/" + userName, {
       method: "Get",
       headers: {
         "Accept": "application/json", 
         "Content-Type": "application/json"
       },
     });
-    const body = await response.json()
-    return body._embedded; 
+    const body = await response.json();
+    return body; 
+  }
+
+  async function fetchFromInvitesByScheduileId(scheduleId){
+    const response = await fetch("/invites/schedule/" + scheduleId, {
+      method: "Get",
+      headers: {
+        "Accept": "application/json", 
+        "Content-Type": "application/json"
+      },
+    });
+    const body = await response.json();
+    return body;
   }
 
   async function sendToSchedule(event){
     const response = await fetch("/schedules", {
-      method: "Put",
+      method: "Post",
       headers: {
         "Accept": "application/json", 
         "Content-Type": "application/json"
       },
       body: JSON.stringify(event), 
     });
-    console.log("Sent to backend")
   }
 
   async function sendToInvites(invite){
     const response = await fetch("/invites", {
-      method: "Put",
+      method: "Post",
       headers: {
         "Accept": "application/json", 
         "Content-Type": "application/json"
       },
       body: JSON.stringify(invite),
     });
-    console.log("Sent to backend")
   }
+
+  // Note: Need to remove all invites with this schedule ID before you can remove it. 
+  async function removeFromSchedule(scheduleID){ 
+    await removeFromInvites(scheduleID);
+    const response = await fetch("/schedules/" + scheduleID, {
+      method: "Delete",
+      headers: {
+        "Accept": "application/json", 
+        "Content-Type": "application/json"
+      },
+    });
+  }
+
+  async function removeFromInvites(scheduleID){
+    const allInvites = await fetchFromInvitesByScheduileId(scheduleID);
+    for (const elem in allInvites){
+      const response = await fetch("/invites/" + allInvites[elem].id, {
+        method: "Delete",
+        headers: {
+          "Accept": "application/json", 
+          "Content-Type": "application/json"
+        },
+      });
+    }
+  }
+
 
   /* Get the current date for the calendar */
   const [selectedDay, setSelectedDay] = useState(new Date());
   const splitSelectedDay = selectedDay.toString().split(" ").slice(0, 4);
-  const [stringSelectedDay, setStringSelectedDay] = useState(splitSelectedDay.map( (word) => word = word + " "));
+  const [stringSelectedDay, setStringSelectedDay] = useState(splitSelectedDay.map( (word) => word = word + " ").join().replaceAll(",", ""));
   /* Open the GMU events website function */
   const gmuEvents = () => {
     window.open("https://mason360.gmu.edu/events", "_blank");
@@ -114,6 +130,8 @@ export default function HomePage(myPersonID){
   const [myEvents, setMyEvents] = useState([]); /* Temporary, since currently cannot add to database */
 
   function handleAddEvent(){
+    // const thisDayEvents = fetchFromSchedule(stringSelectedDay, myPersonID);
+
     /* Currently just adds the events to myEvents list, but should send them to the database */
     const event = {eventName, eventTime, eventInvites};
     setMyEvents((prevEvents) =>{
@@ -126,17 +144,21 @@ export default function HomePage(myPersonID){
   */
   useEffect(() => {
     const splitSelectedDay = selectedDay.toString().split(" ").slice(0, 4);
-    setStringSelectedDay(splitSelectedDay.map( (word) => word = word + " "));
+    setStringSelectedDay(splitSelectedDay.map( (word) => word = word + " ").join().replaceAll(",", ""));
   }, [selectedDay]);
-  
+
   return(
     <> 
-    <button onClick={sendToSchedule({personId: 1, date: stringSelectedDay, time: 12-2, name: testingAdding})}>Testing Adding</button> 
-    <button onClick={sendToInvites({inviter: 1, invitee: 3, scheulde: 2})}>Testing Inviting</button>
-    <button onClick={fetchFromSchedule("10 4 2022", 2) }>Testing Getting an Event</button>
-    <button onCLick={fetchFromScheduleID({personID: 1, date: "12 15 2022", time: "12pm-5pm", name: "bday"})}>Testing Getting ID of Event</button>
-    <button onCLick={fetchFromInvites(2)}>Testing Getting Invitee</button>
-    <button onClick={fetchFromPersons(1)}>Testing Getting PersonID</button>
+    {/*
+    <button onClick={() => sendToSchedule({personId: {"id": 1}, date: stringSelectedDay, time: "12-2", name: "testingAdding"})}>Adding</button> 
+    <button onClick={() => sendToInvites({inviter: {"id": 1}, invitee: {"id": 3}, schedule: {"id": 1}})}>Inviting</button>
+    <button onClick={() => fetchFromSchedule("10 4 2022", 2) }>Getting an Event</button>
+    <button onClick={() => fetchFromInvites(2) }>Get Invites</button>
+    <button onClick={() => fetchFromPersons("neer")}>Get Person Username</button>
+    <button onClick={() => removeFromSchedule(1)}>Remove Event</button>
+    <button onClick={() => fetchFromScheduleToGetId({personId: {"id": 1}, date: stringSelectedDay, time: "12-2", name: "testingAdding"})}>Get Event's Id</button>
+    <button onClick={() => removeFromInvites(1)}>Remove Invite</button>
+    */}
 
     {/* HTML for the Title */}
     <h1 class = "Title">Shareable Planner</h1>
