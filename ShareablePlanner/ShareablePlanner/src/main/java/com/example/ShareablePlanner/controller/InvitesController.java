@@ -75,6 +75,12 @@ public class InvitesController {
 		return inviteAssembler.toModel(invites);
 	}
 	
+	@GetMapping("/invites/invitee/{inviteeId}")
+	public List<Invites> allInviteeId(@PathVariable Person inviteeId){
+		List<Invites> invites = inviteRepository.findByInvitee(inviteeId);
+		return invites;
+	}
+	
 	@PutMapping("/invites/{id}")
 	public ResponseEntity<Object> replaceInvites(@RequestBody Invites newInvites, @PathVariable Long id){
 		Invites updatedInvites = inviteRepository.findById(id)

@@ -70,6 +70,18 @@ public class ScheduleController {
 		return scheduleAssembler.toModel(schedule);
 	}
 	
+	@GetMapping("/schedules/{ymd}/{personId}")
+	public List<Schedule> allYMDpersonId(@PathVariable String ymd, @PathVariable Person personId){
+		List<Schedule> schedule = scheduleRepository.findByDateAndPersonId(ymd, personId);
+		return schedule;
+	}
+	
+	@GetMapping("/schedules/{personId}/{date}/{time}/{name}")
+	public Schedule onePersonIdDateTimeName(@PathVariable String date, @PathVariable Person personId, @PathVariable String time, @PathVariable String name){
+		Schedule schedule = scheduleRepository.findByPersonIdAndDateAndTimeAndName(personId, date, time, name);
+		return schedule;
+	}
+	
 	@PutMapping("/schedules/{id}")
 	public ResponseEntity<Object> replaceSchedule(@RequestBody Schedule newSchedule, @PathVariable Long id){
 		Person person = personRepository.findById(newSchedule.getPersonId().getId()).get();
