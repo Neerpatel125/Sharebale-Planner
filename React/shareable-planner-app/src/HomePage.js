@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import './App.css';
 import EventsTable from "./EventsTable";
 
-export default function HomePage(){
+export default function HomePage(myPersonID){
   
   //  How to get things from the backend. To put things, change "Get" to "Put"
   /*
   const [data, setData] = useState(); 
-  async function getPersons(){
-    const response = await fetch("/persons", {
+  async function getPersons(userName){
+    const response = await fetch("/persons" + "/" + userName, {
       method: "Get",
       headers: {
         "Accept": "application/json", 
@@ -19,9 +19,85 @@ export default function HomePage(){
     });
     const body = await response.json();
     setData(body);
-    console.log(body);
+    console.log(body._embedded.personList[0].userName)
   }
   */
+
+  async function fetchFromSchedule(dayString, myPersonID){
+    const response = await fetch("/schedules/" + dayString + "/" + myPersonID, {
+      method: "Get",
+      headers: {
+        "Accept": "application/json", 
+        "Content-Type": "application/json"
+      },
+    });
+    const body = await response.json();
+    console.log(body);
+    return body._embedded; 
+  }
+
+  async function fetchFromScheduleID(event){
+    const url = "/schedules/" + event.personID + "/" + event.date + "/" + event.time + "/" + event.name
+    const response = await fetch(url, {
+      method: "Get",
+      headers: {
+        "Accept": "application/json", 
+        "Content-Type": "application/json"
+      },
+    });
+    const body = await response.json();
+    console.log(body);
+    // return body._embdedded.eventsList.ID? 
+  }
+
+  async function fetchFromInvites(inviteeID){
+    const response = await fetch("/invites/invitee/" + inviteeID, {
+      method: "Get",
+      headers: {
+        "Accept": "application/json", 
+        "Content-Type": "application/json"
+      },
+    });
+    const body = await response.json();
+    console.log(body);
+    // return body._embedded; 
+  }
+
+  async function fetchFromPersons(personID){
+    const response = await fetch("/persons/id/" + personID, {
+      method: "Get",
+      headers: {
+        "Accept": "application/json", 
+        "Content-Type": "application/json"
+      },
+    });
+    const body = await response.json()
+    return body._embedded; 
+  }
+
+  async function sendToSchedule(event){
+    const response = await fetch("/schedules", {
+      method: "Put",
+      headers: {
+        "Accept": "application/json", 
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(event), 
+    });
+    console.log("Sent to backend")
+  }
+
+  async function sendToInvites(invite){
+    const response = await fetch("/invites", {
+      method: "Put",
+      headers: {
+        "Accept": "application/json", 
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(invite),
+    });
+    console.log("Sent to backend")
+  }
 
   /* Get the current date for the calendar */
   const [selectedDay, setSelectedDay] = useState(new Date());
@@ -54,12 +130,14 @@ export default function HomePage(){
   }, [selectedDay]);
   
   return(
-    <>
-    {/* 
-      This line is to text the information obtained from the Backend Fetch. 
-      <button onClick={getPersons}>Testing Backend Connection</button> 
-    */}
-    
+    <> 
+    <button onClick={sendToSchedule({personId: 1, date: stringSelectedDay, time: 12-2, name: testingAdding})}>Testing Adding</button> 
+    <button onClick={sendToInvites({inviter: 1, invitee: 3, scheulde: 2})}>Testing Inviting</button>
+    <button onClick={fetchFromSchedule("10 4 2022", 2) }>Testing Getting an Event</button>
+    <button onCLick={fetchFromScheduleID({personID: 1, date: "12 15 2022", time: "12pm-5pm", name: "bday"})}>Testing Getting ID of Event</button>
+    <button onCLick={fetchFromInvites(2)}>Testing Getting Invitee</button>
+    <button onClick={fetchFromPersons(1)}>Testing Getting PersonID</button>
+
     {/* HTML for the Title */}
     <h1 class = "Title">Shareable Planner</h1>
 
