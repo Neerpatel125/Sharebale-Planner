@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import './App.css';
 import EventsTable from "./EventsTable";
 
-export default function HomePage(myPersonID){
+export default function HomePage( {myPersonID} ){
 
   async function fetchFromSchedule(dayString, personID){
     const response = await fetch("/schedules/" + dayString + "/" + personID, {

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import './App.css';
 import {Link, useHistory} from 'react-router-dom';
 
-function LoginPage1 (setPersonID)
+function LoginPage1 ( {setPersonID} )
 {
     const history = useHistory(); 
 
@@ -26,13 +26,18 @@ function LoginPage1 (setPersonID)
         if (enteredUserName === "" || enteredPassword === ""){
             return; 
         }
-        const person = await fetchFromPersons(enteredUserName);
-        if (person.password === enteredPassword){
-            setPersonID(person[0].id);
-            history.push("/Home")
+        try{
+            const person = await fetchFromPersons(enteredUserName);
+            if (person[0].password === enteredPassword){
+                setPersonID(person[0].id);
+                history.push("/Home")
+            }
+            else{
+                alert("Incorrect username or password.");
+            }
         }
-        else{
-            alert("Incorrect username or password.");
+        catch(error){
+            alert("Incorrect username or password");
         }
     }
 

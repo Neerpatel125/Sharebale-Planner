@@ -14,6 +14,17 @@ function RegisterPage1 ()
           body: JSON.stringify(person),
         });
     }
+    async function fetchFromPersons(userName){
+        const response = await fetch("/persons/userName/" + userName, {
+          method: "Get",
+          headers: {
+            "Accept": "application/json", 
+            "Content-Type": "application/json"
+          },
+        });
+        const body = await response.json();
+        return body; 
+    }
 
     async function handleSubmitButton(){
         if (enteredEmail === "" || enteredUserName === "" || enteredPassword === ""){
@@ -24,8 +35,14 @@ function RegisterPage1 ()
             password: enteredPassword, 
             email: enteredEmail
         };
-        await sendToPersons(person);
-        alert("Account Created!"); 
+        const gotPerson = await fetchFromPersons(enteredUserName); 
+        if (gotPerson.length < 1){
+            sendToPersons(person); 
+            alert("Account Created!");
+        }
+        else{
+            alert("Username already exists."); 
+        }
     }
 
     const [enteredUserName, setEnteredUserName] = useState("");
