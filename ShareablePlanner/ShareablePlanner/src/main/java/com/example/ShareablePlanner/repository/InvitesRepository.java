@@ -11,4 +11,5 @@ import com.example.ShareablePlanner.domain.Schedule;
 public interface InvitesRepository extends JpaRepository<Invites, Long>{
 	List<Invites> findByInvitee(Person inviteeId);
 	List<Invites> findBySchedule(Schedule scheduleId);
+	Invites findByInviteeAndSchedule(Person inviteeId, Schedule scheduleId);
 }

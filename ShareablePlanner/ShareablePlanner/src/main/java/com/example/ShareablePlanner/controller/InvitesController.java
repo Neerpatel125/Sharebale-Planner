@@ -82,6 +82,12 @@ public class InvitesController {
 		return invites;
 	}
 	
+	@GetMapping("/invites/inviteeAndSchedule/{inviteeId}/{scheduleId}")
+	public Invites oneInviteeIdAndScheduleId(@PathVariable Person inviteeId, @PathVariable Schedule scheduleId){
+		Invites invites = inviteRepository.findByInviteeAndSchedule(inviteeId, scheduleId);
+		return invites;
+	}
+	
 	@GetMapping("/invites/schedule/{scheduleId}")
 	public List<Invites> allScheduleId(@PathVariable Schedule scheduleId){
 		List<Invites> invites = inviteRepository.findBySchedule(scheduleId);
