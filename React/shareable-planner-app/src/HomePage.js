@@ -55,6 +55,18 @@ export default function HomePage( {myPersonID, setPersonID} ){
     return body; 
   }
 
+  async function fetchFromPersonsToGetUserName(id){
+    const response = await fetch("/persons/id/" + id, {
+      method: "Get",
+      headers: {
+        "Accept": "application/json", 
+        "Content-Type": "application/json"
+      },
+    });
+    const body = await response.json();
+    return body; 
+  }
+
   async function fetchFromInvitesByScheduileId(scheduleId){
     try{
       const response = await fetch("/invites/schedule/" + scheduleId, {
@@ -139,7 +151,7 @@ export default function HomePage( {myPersonID, setPersonID} ){
     for (let i = 0; i < arrEvents.length; i++){
       const allInvites = await fetchFromInvitesByScheduileId(arrEvents[i].id);
       const allInvited = allInvites.map((e) => e.invitee.userName + ", ");
-      const invitedString = allInvited.join() + arrEvents[i].personId.userName;
+      const invitedString = allInvited.join("") + arrEvents[i].personId.userName;
       res.push(invitedString);
     }
     setMyEventsInvites(res);
@@ -201,8 +213,10 @@ export default function HomePage( {myPersonID, setPersonID} ){
       } 
     }
     // Add the event's invites to myEventInvites
+    const eventOwnerName = await fetchFromPersonsToGetUserName(myPersonID);
+    const stringToAdd = eventInvites + ", " + eventOwnerName.userName;
     setMyEventsInvites ( (prevInvites) => {
-      return [...prevInvites, eventInvites]
+      return [...prevInvites, stringToAdd]
     });
     // Add the event to myEvents
     setMyEvents((prevEvents) =>{
