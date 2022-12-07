@@ -162,7 +162,7 @@ export default function HomePage( {myPersonID, setPersonID} ){
     const thisDayEvents= await fetchFromSchedule(stringSelectedDay, myPersonID);
     if (thisDayEvents.status === 400){
       setMyEvents([])
-      setEventInvites([]);
+      setMyEventsInvites([]);
     }
     // Get all events this user is invited to for today
     const allInvited = await fetchFromInvites(myPersonID);
@@ -172,7 +172,7 @@ export default function HomePage( {myPersonID, setPersonID} ){
     // Set myEvents to today's events.
     if (allThisDayEvents.length < 1){
       setMyEvents([])
-      setEventInvites([]);
+      setMyEventsInvites([]);
     }
     else{
       setMyEvents(allThisDayEvents);
@@ -250,7 +250,7 @@ export default function HomePage( {myPersonID, setPersonID} ){
   // When the stringSelected day changes, load the events for this new day into myEvents.
   // This will cause the EventsBox to update and display the correct events.  
   useEffect( () => {
-    getTodaysEvents(); 
+    getTodaysEvents();
   }, // eslint-disable-next-line
   [stringSelectedDay]);
 
