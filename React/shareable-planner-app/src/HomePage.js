@@ -156,7 +156,8 @@ export default function HomePage( {myPersonID, setPersonID} ){
       return; 
     }
   }
-
+  /* Current Username */
+  const myUserName = fetchFromPersonsToGetUserName(myPersonID); 
 
   /* Get the current date for the calendar */
   const [selectedDay, setSelectedDay] = useState(new Date());
@@ -294,6 +295,7 @@ export default function HomePage( {myPersonID, setPersonID} ){
     {/* HTML for the Title */}
     <div class className="HomePage">
     <h1 class = "Title">Shareable Planner</h1>
+    <h4 class="HomePage__Username">{myUserName}</h4>
 
     {/* HTML for the Calendar */}
     <div class = "calendar">

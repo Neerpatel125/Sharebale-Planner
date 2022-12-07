@@ -10,8 +10,8 @@ export default function EventsTableRow( {event, index, events, setMyEvents,
             await removeFromSchedule(event.id);
         }
         else{
-            const inviteId = await fetchFromInvitesByInviteeIdAndScheduleId(myPersonID, event.id);
-            await removeFromInvitesByID(inviteId); 
+            const invite = await fetchFromInvitesByInviteeIdAndScheduleId(myPersonID, event.id);
+            await removeFromInvitesByID(invite.id); 
         }
         // Remove the event from myEvents
         events = events.slice(0, index).concat(events.slice(index+1, events.length));
