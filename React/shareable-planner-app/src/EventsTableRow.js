@@ -1,10 +1,18 @@
 import React from "react";
 
-export default function EventsTableRow( {event, index, events, setMyEvents, removeFromSchedule, eventsInvites, setEventsInvites } ){
+export default function EventsTableRow( {event, index, events, setMyEvents, 
+    removeFromSchedule, eventsInvites, setEventsInvites, myPersonID, 
+    fetchFromInvitesByInviteeIdAndScheduleId, removeFromInvitesByID} ){
 
     async function handleOnClick(){
         // Remove the event from the Schedule Table
-        await removeFromSchedule(event.id); 
+        if (myPersonID === event.personId.id){
+            await removeFromSchedule(event.id);
+        }
+        else{
+            const inviteId = await fetchFromInvitesByInviteeIdAndScheduleId(myPersonID, event.id);
+            await removeFromInvitesByID(inviteId); 
+        }
         // Remove the event from myEvents
         events = events.slice(0, index).concat(events.slice(index+1, events.length));
         setMyEvents(events);

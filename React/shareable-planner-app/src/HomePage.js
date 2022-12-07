@@ -84,6 +84,18 @@ export default function HomePage( {myPersonID, setPersonID} ){
     }
   }
 
+  async function fetchFromInvitesByInviteeIdAndScheduleId(inviteeId, scheduleId){
+    const response = await fetch("/invites/inviteeAndSchedule/" + inviteeId + "/" + scheduleId, {
+      method: "Get",
+      headers: {
+        "Accept": "application/json", 
+        "Content-Type": "application/json"
+      },
+    });
+    const body = await response.json();
+    return body; 
+  }
+
   async function sendToSchedule(event){
     await fetch("/schedules", {
       method: "Post",
@@ -117,6 +129,16 @@ export default function HomePage( {myPersonID, setPersonID} ){
     });
   }
 
+  async function removeFromInvitesByID(inviteId){ 
+    await fetch("/invites/" + inviteId, {
+      method: "Delete",
+      headers: {
+        "Accept": "application/json", 
+        "Content-Type": "application/json"
+      },
+    });
+  }
+
   async function removeFromInvites(scheduleID){
     try{
       const allInvites = await fetchFromInvitesByScheduleId(scheduleID);
@@ -134,6 +156,7 @@ export default function HomePage( {myPersonID, setPersonID} ){
       return; 
     }
   }
+
 
   /* Get the current date for the calendar */
   const [selectedDay, setSelectedDay] = useState(new Date());
@@ -285,7 +308,9 @@ export default function HomePage( {myPersonID, setPersonID} ){
         <h2>Events for {stringSelectedDay}</h2>
       </div>
       <EventsTable events={myEvents} setEvents={setMyEvents} removeFromSchedule={removeFromSchedule} 
-        eventsInvites={myEventsInvites} setEventsInvites={setMyEventsInvites}/>
+        eventsInvites={myEventsInvites} setEventsInvites={setMyEventsInvites} myPersonID={myPersonID}
+        fetchFromInvitesByInviteeIdAndScheduleId={fetchFromInvitesByInviteeIdAndScheduleId}
+        removeFromInvitesByID={removeFromInvitesByID} />
     </div>
 
     {/* HTML for the Add Events Box */}
