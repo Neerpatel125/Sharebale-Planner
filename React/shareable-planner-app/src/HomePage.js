@@ -199,25 +199,36 @@ export default function HomePage( {myPersonID, setPersonID} ){
     await sendToSchedule(event);
     // Now the invites
     const scheduleId = await fetchFromScheduleToGetId(event);
-    const peopleToInvite = eventInvites.split(",").map((e) => e.trim());
-    if (peopleToInvite[0] !== ""){
-      for(let i = 0; i < peopleToInvite.length; i++){
-        const inviteePerson = await fetchFromPersons(peopleToInvite[i]);
-        const inviteeId = inviteePerson[0].id;   
-        const theInvite = {
-          inviter: {"id": myPersonID}, 
-          invitee: {"id": inviteeId}, 
-          schedule: {"id": scheduleId},
-        }
-        await sendToInvites(theInvite); 
-      } 
+    try{
+      const peopleToInvite = eventInvites.split(",").map((e) => e.trim());
+      if (peopleToInvite[0] !== ""){
+        for(let i = 0; i < peopleToInvite.length; i++){
+          const inviteePerson = await fetchFromPersons(peopleToInvite[i]);
+          const inviteeId = inviteePerson[0].id;   
+          const theInvite = {
+            inviter: {"id": myPersonID}, 
+            invitee: {"id": inviteeId}, 
+            schedule: {"id": scheduleId},
+          }
+          await sendToInvites(theInvite); 
+        } 
+      }
     }
+    catch(error){}
     // Add the event's invites to myEventInvites
     const eventOwnerName = await fetchFromPersonsToGetUserName(myPersonID);
-    const stringToAdd = eventInvites + ", " + eventOwnerName.userName;
-    setMyEventsInvites ( (prevInvites) => {
-      return [...prevInvites, stringToAdd]
-    });
+    if (eventInvites === ""){
+      const stringToAdd = eventOwnerName.userName;
+      setMyEventsInvites ( (prevInvites) => {
+        return [...prevInvites, stringToAdd]
+      });
+    }
+    else{
+      const stringToAdd = eventInvites + ", " + eventOwnerName.userName;
+      setMyEventsInvites ( (prevInvites) => {
+        return [...prevInvites, stringToAdd]
+      });
+    }
     // Add the event to myEvents
     setMyEvents((prevEvents) =>{
       return [...prevEvents, event];
