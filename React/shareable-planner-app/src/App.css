@@ -152,7 +152,8 @@
   .eventsBox__Table_Row{
     text-align: center;
     background-color: brown;
-  
+  }
+  .eventsBox__Table__Row td{
     
   }
   .eventsBox__Table__Row__Button{
