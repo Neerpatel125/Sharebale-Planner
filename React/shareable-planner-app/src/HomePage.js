@@ -134,13 +134,15 @@ export default function HomePage( {myPersonID, setPersonID} ){
   }
   
   /* Store input information for adding events */
- 
-
-  async function getInvitesString(event){
-    const allInvites = await fetchFromInvitesByScheduileId(event.id);
-    const allInvited = allInvites.map((e) => e.invitee.userName + " "); 
-    const invitedString = allInvited.join();
-    return invitedString; 
+  async function getInvitesString(arrEvents){
+    const res = [];
+    for (let i = 0; i < arrEvents.length; i++){
+      const allInvites = await fetchFromInvitesByScheduileId(arrEvents[i].id);
+      const allInvited = allInvites.map((e) => e.invitee.userName + ", ");
+      const invitedString = allInvited.join() + arrEvents[i].personId.userName;
+      res.push(invitedString);
+    }
+    setMyEventsInvites(res);
   }
 
   async function getTodaysEvents(){
@@ -162,8 +164,7 @@ export default function HomePage( {myPersonID, setPersonID} ){
     }
     else{
       setMyEvents(allThisDayEvents);
-      const temp = allThisDayEvents.map((e) => getInvitesString(e));
-      setEventInvites(temp); 
+      await getInvitesString(allThisDayEvents);
     } 
   }
 
@@ -171,7 +172,6 @@ export default function HomePage( {myPersonID, setPersonID} ){
   const [eventTime, setEventTime] = useState("");
   const [eventInvites, setEventInvites] = useState("");
   const [myEvents, setMyEvents] = useState([]);
-
   const [myEventsInvites, setMyEventsInvites] = useState([]);
 
   async function handleAddEvent(){
@@ -200,13 +200,13 @@ export default function HomePage( {myPersonID, setPersonID} ){
         await sendToInvites(theInvite); 
       } 
     }
-    // Add the event to myEvents
-    setMyEvents((prevEvents) =>{
-      return [...prevEvents, event];
-    });
     // Add the event's invites to myEventInvites
     setMyEventsInvites ( (prevInvites) => {
       return [...prevInvites, eventInvites]
+    });
+    // Add the event to myEvents
+    setMyEvents((prevEvents) =>{
+      return [...prevEvents, event];
     });
   }
 
