@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import './App.css';
 import {Link, useHistory} from 'react-router-dom';
 
-function LoginPage1 ( {setPersonID} )
+function LoginPage1 ( {setPersonID, setMyUserName} )
 {
     const history = useHistory(); 
 
@@ -30,6 +30,7 @@ function LoginPage1 ( {setPersonID} )
             const person = await fetchFromPersons(enteredUserName);
             if (person[0].password === enteredPassword){
                 await setPersonID(person[0].id);
+                await setMyUserName(enteredUserName);
                 history.push("/Home")
             }
             else{

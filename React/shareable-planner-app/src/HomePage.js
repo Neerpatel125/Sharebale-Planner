@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import './App.css';
 import EventsTable from "./EventsTable";
 
-export default function HomePage( {myPersonID, setPersonID} ){
+export default function HomePage( {myPersonID, setPersonID, myUserName, setMyUserName} ){
 
   async function fetchFromSchedule(dayString, personID){
     const response = await fetch("/schedules/" + dayString + "/" + personID, {
@@ -156,9 +156,6 @@ export default function HomePage( {myPersonID, setPersonID} ){
       return; 
     }
   }
-  /* Current Username */
-  const myUserNameObj = fetchFromPersonsToGetUserName(myPersonID);
-  const myUserName = myUserNameObj.userName; 
 
   /* Get the current date for the calendar */
   const [selectedDay, setSelectedDay] = useState(new Date());
@@ -264,6 +261,7 @@ export default function HomePage( {myPersonID, setPersonID} ){
   const history = useHistory(); 
   async function handleLogoutButton(){
     await setPersonID(-1);
+    await setMyUserName("");
     history.push("/");
   }
 
@@ -296,7 +294,7 @@ export default function HomePage( {myPersonID, setPersonID} ){
     {/* HTML for the Title */}
     <div class className="HomePage">
     <h1 class = "Title">Shareable Planner</h1>
-    <h4 class="HomePage__Username">{myUserName}</h4>
+    <h3 class="HomePage__Username">{myUserName}</h3>
 
     {/* HTML for the Calendar */}
     <div class = "calendar">

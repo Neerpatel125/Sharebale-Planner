@@ -8,11 +8,12 @@ import RegisterPage1 from './Register';
 
 function App() { 
   const [myPersonID, setPersonID] = useState();
+  const [myUserName, setMyUserName] = useState();
   return(
     <Router>
           <Switch>
             <Route path="/" exact>
-              <LoginPage1 setPersonID={setPersonID}/>
+              <LoginPage1 setPersonID={setPersonID} setMyUserName={setMyUserName}/>
               {/* <Link to='/Register'>Register</Link> */}
             </Route>
             <Route path="/Register">
@@ -20,7 +21,7 @@ function App() {
               {/* <Link to='/'>Login</Link> */}
             </Route>
             <Route path="/Home">
-              <HomePage myPersonID={myPersonID} setPersonID={setPersonID}/>
+              <HomePage myPersonID={myPersonID} setPersonID={setPersonID} myUserName={myUserName} setMyUserName={setMyUserName}/>
               {/* <Link to="/Home">Home</Link>} */}
             </Route>
           </Switch>
