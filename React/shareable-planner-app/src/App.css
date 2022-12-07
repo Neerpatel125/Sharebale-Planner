@@ -72,10 +72,20 @@
 
 .Title{
     text-align: center;
+    color:black;
+    text-shadow: 2px 2px gray;
+    font-weight:bold;
+    
   }
   
-  .HomePage body{
-    background-color: lightblue;
+  body{
+    background-image: url(https://static3.depositphotos.com/1000624/114/v/450/depositphotos_1140664-stock-illustration-red-wave.jpg);
+    height: 20%;
+
+  /* Center and scale the image nicely */
+  /* background-position: center; */
+  background-repeat: no-repeat;
+  /* background-size: cover; */
   }
   
   /* Position the Calendar */
@@ -104,7 +114,9 @@
   }
   /* Style the buttons on the calendar */
   .calendar button{
-    background-color: lightseagreen;
+    /* background-color: lightseagreen; */
+    background-color: brown;
+    box-shadow: 10px 5px 5px rgb(94, 58, 58);
   }
   
   .calendar button:focus{
@@ -120,6 +132,11 @@
     border-style: solid;
     border-width: medium;
     overflow: scroll;
+    /* background-color: brown; */
+    background-image: url(https://i.ytimg.com/vi/KLR-1ca_VxI/maxresdefault_live.jpg);
+    color:aliceblue;   
+    box-shadow: 10px 5px 5px red;
+
   }
   .eventsBox__title{
     text-align: center;
@@ -130,10 +147,12 @@
     text-align: center;
   }
   .eventsBox__Table__Head{
-   
+
   }
   .eventsBox__Table_Row{
     text-align: center;
+    background-color: brown;
+  
     
   }
   .eventsBox__Table__Row__Button{
@@ -149,6 +168,11 @@
     height: 55%;
     border-style: solid;
     border-width: medium;
+    background-image: url(https://image.freepik.com/vector-gratis/fondo-rojo-ondulado_1189-309.jpg);
+    /* background-color: brown; */
+    color:aliceblue;
+    box-shadow: 10px 5px 5px red;
+    
   }
   .addBox__title{
     text-align: center;
@@ -166,10 +190,24 @@
     position: absolute;
     left: 46%;
     top: 36%;
+    background-color: brown;
+    color:aliceblue;
+    box-shadow: 10px 5px 5px red;
   }
   
   .LogoutButton{
     position: absolute;
     left: 90%;
     top: 5%;
+    background-color: black;
+    color:aliceblue;
+    box-shadow: 10px 5px 5px gray;
+  }
+  .addBox__content input{
+    box-shadow: 10px 5px 5px red;
+  }
+  .addBox__content button{
+    background-color: brown;
+    color:aliceblue;
+    box-shadow: 10px 5px 5px red;
   }
