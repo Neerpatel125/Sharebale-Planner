@@ -67,7 +67,7 @@ export default function HomePage( {myPersonID, setPersonID} ){
     return body; 
   }
 
-  async function fetchFromInvitesByScheduileId(scheduleId){
+  async function fetchFromInvitesByScheduleId(scheduleId){
     try{
       const response = await fetch("/invites/schedule/" + scheduleId, {
         method: "Get",
@@ -119,7 +119,7 @@ export default function HomePage( {myPersonID, setPersonID} ){
 
   async function removeFromInvites(scheduleID){
     try{
-      const allInvites = await fetchFromInvitesByScheduileId(scheduleID);
+      const allInvites = await fetchFromInvitesByScheduleId(scheduleID);
       for (const elem in allInvites){
         await fetch("/invites/" + allInvites[elem].id, {
           method: "Delete",
@@ -149,7 +149,7 @@ export default function HomePage( {myPersonID, setPersonID} ){
   async function getInvitesString(arrEvents){
     const res = [];
     for (let i = 0; i < arrEvents.length; i++){
-      const allInvites = await fetchFromInvitesByScheduileId(arrEvents[i].id);
+      const allInvites = await fetchFromInvitesByScheduleId(arrEvents[i].id);
       const allInvited = allInvites.map((e) => e.invitee.userName + ", ");
       const invitedString = allInvited.join("") + arrEvents[i].personId.userName;
       res.push(invitedString);
