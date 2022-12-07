@@ -167,8 +167,9 @@ export default function HomePage( {myPersonID, setPersonID} ){
     // Get all events this user is invited to for today
     const allInvited = await fetchFromInvites(myPersonID);
     const allInvitedEvents = allInvited.map((e) => e.schedule);
+    const allInvitedEventsForToday = allInvitedEvents.filter( (e) => e.date === stringSelectedDay);
     // Combine the two lists of events
-    const allThisDayEvents = thisDayEvents.concat(allInvitedEvents);
+    const allThisDayEvents = thisDayEvents.concat(allInvitedEventsForToday);
     // Set myEvents to today's events.
     if (allThisDayEvents.length < 1){
       setMyEvents([])
@@ -237,7 +238,7 @@ export default function HomePage( {myPersonID, setPersonID} ){
 
   const history = useHistory(); 
   async function handleLogoutButton(){
-    await setPersonID(null); 
+    await setPersonID(-1);
     history.push("/");
   }
 
