@@ -157,7 +157,8 @@ export default function HomePage( {myPersonID, setPersonID} ){
     }
   }
   /* Current Username */
-  const myUserName = fetchFromPersonsToGetUserName(myPersonID); 
+  const myUserNameObj = fetchFromPersonsToGetUserName(myPersonID);
+  const myUserName = myUserNameObj.userName; 
 
   /* Get the current date for the calendar */
   const [selectedDay, setSelectedDay] = useState(new Date());
