@@ -227,7 +227,6 @@ export default function HomePage( {myPersonID, setPersonID, myUserName, setMyUse
     // Now the invites
     const scheduleId = await fetchFromScheduleToGetId(event);
     const peopleToInvite = eventInvites.split(",").map((e) => e.trim());
-    let attending = eventInvites; 
     if (peopleToInvite[0] !== ""){
       for(let i = 0; i < peopleToInvite.length; i++){
         try{
@@ -242,20 +241,21 @@ export default function HomePage( {myPersonID, setPersonID, myUserName, setMyUse
         }
         catch(error){
           alert("Username is invalid: " + peopleToInvite[i]);
-          attending = attending.replace(peopleToInvite[i], "");
+          await removeFromSchedule(scheduleId);
+          return;  
         } 
       } 
     }
     // Add the event's invites to myEventInvites
     const eventOwnerName = await fetchFromPersonsToGetUserName(myPersonID);
-    if (attending === ""){
+    if (eventInvites === ""){
       const stringToAdd = eventOwnerName.userName;
       setMyEventsInvites ( (prevInvites) => {
         return [...prevInvites, stringToAdd]
       });
     }
     else{
-      const stringToAdd = attending + ", " + eventOwnerName.userName;
+      const stringToAdd = eventInvites + ", " + eventOwnerName.userName;
       setMyEventsInvites ( (prevInvites) => {
         return [...prevInvites, stringToAdd]
       });
