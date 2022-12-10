@@ -28,6 +28,7 @@ function RegisterPage1 ()
 
     async function handleSubmitButton(){
         if (enteredEmail === "" || enteredUserName === "" || enteredPassword === ""){
+            alert("Username, password, or email cannot be empty.");
             return;
         } 
         const person = {

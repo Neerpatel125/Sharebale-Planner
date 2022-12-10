@@ -24,6 +24,7 @@ function LoginPage1 ( {setPersonID, setMyUserName} )
 
     async function handleLoginButton(){
         if (enteredUserName === "" || enteredPassword === ""){
+            alert("Uername or password cannot be empty.");
             return; 
         }
         try{
