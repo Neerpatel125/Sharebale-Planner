@@ -1,4 +1,11 @@
-
+*{
+  font-family: Arial, Helvetica, sans-serif;
+  --calendar-bg-color: lightblue;
+  --calendar-font-color: #FFF;
+  --orange-color: rgb(243, 174, 136);
+  --light-blue_color:rgb(67, 184, 234);
+  --lighter-orange: rgb(255, 245, 235);
+}
 /* Login and Register Page CSS */
 .login-page1 {
     height: 100vh;
@@ -6,39 +13,55 @@
     overflow-x: hidden;
     overflow-y: hidden;
 }
+
 .login-page1 .row {
     height: 150%;
 }
 
 .text-part {   
     width: 70%;
-    padding: 1%;
+    padding: 5px;
     margin:100px;
 }
 
+
+/* Some styling for login form.  */
 .login-page1 input {
-    margin-top: 1%;
+    margin-top: 25px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    padding-left:5px;
     height: 50px;
     width: 50%;
+    border:none;
+    border-bottom: 0.125rem solid var(--light-blue_color);
+    border-radius: 5px;
 }
+
+  .login-page1 input :focus{
+    outline:none;
+  }
+  
 
 .login-page1 button {
     font-size:20px;
+    margin-bottom: 20px;
     height: 50px;
-    margin-top: 1%;
+    margin-top: 30px;
     width: 50%;
-    background-color: brown;
+    background-color: rgb(45, 80, 170);
     color: white;
+    border-radius: 5px;
 }
 
 .login-page1 h1 {
-    font-size: 280%;
-    color: transparent;
+    font-size: 60px;
+    /* color: transparent; */
+    color:rgb(226, 119, 12);
     -webkit-text-stroke-width: 2px;
-    -webkit-text-stroke-color: brown;
-    font-weight:bold;
-    margin: 1% 17%;
-    
+    /* -webkit-text-stroke-color: rgb(0, 0, 0); */
+    font-weight:lighter;
+    margin-top: 50px;    
 }
 .login-page1 a{
     color:rgb(16, 19, 206);
@@ -54,11 +77,9 @@
     height: 38px; */
 }
 .login-page1-rectangle{
-    /* width: 980px; */
-    width: 60%;
+    width: 980px;
     height: 260vh;
-    /* height:60%; */
-    background-color:brown;
+    background-color:rgb(255, 156, 75);
     position: absolute;
     right:-400px;
     bottom: -550px;
@@ -68,75 +89,129 @@
 
 
 
+/* Remove underline from links */
+a:link{
+  text-decoration: none;
+  color: white;
+}
+a:visited{
+  color: white;
+}
+
+/* Register link */
+div.d-flex .justify-content-between a{
+  color:rgb(226, 119, 12);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+div.d-flex .justify-content-between a:hover{
+  color:lightsalmon;
+  font-size: 1.05rem;
+}
+
+div.d-flex .justify-content-between p{
+  font-size: 16px;
+}
+
+
 /* Home Page CSS */
 
 .Title{
     text-align: center;
-    color:black;
-    text-shadow: 2px 2px gray;
-    font-weight:bold;
-    
+    margin-top:15px;
+    margin: left 50px;
+    color: rgb(50, 78, 146);
   }
   
   body{
-    background-image: url(https://static3.depositphotos.com/1000624/114/v/450/depositphotos_1140664-stock-illustration-red-wave.jpg);
-    height: 20%;
+    background-color: var(--light-blue_color);
+    background-color: rgb(240, 210, 192);
 
-  /* Center and scale the image nicely */
-  /* background-position: center; */
-  background-repeat: no-repeat;
-  /* background-size: cover; */
   }
   
   /* Position the Calendar */
   .calendar{
     width: 70%;
+    font-family: sans-serif;
+    position:relative;
+    background: var(--light-blue_color);
+    color:var(--calennder-font-color);
+    box-sizing: border-box;
+    overflow: hidden;
     margin-left: auto;
     margin-right: auto;
-    padding-bottom: 1%;
+    padding-bottom: .5%;
     height: 30%; 
+    border: none;
+    padding-top: 8px;
+    border-color: white;
+    border-radius: 15px;
+
   }
   /* Style the Month button and arrows */
   .react-calendar__navigation{
     display: flex;
+    border-bottom: solid;
+    border-color: var(--orange-color);
   }
   .react-calendar__navigation__label{
       font-weight: bold;
+      color: rgb(237, 250, 255) !important;
+      font-size: 1.3rem !important;
+      background-color: var(--orange-color);
+
+      
   }
   .react-calendar__navigation__arrow{
       flex-grow: 0.333;
+      color: var(--light-blue_color);
+      font-weight: bolder;
+      
   }
   
   /* Center the Weekday Labels */
   .react-calendar__month-view__weekdays {
     text-align: center;
     font-weight: bold;
+    color: var(--lighter-orange);
+    background: var(--orange-color);
+    padding-bottom: 5px;
+    padding-top: 10px;
+    margin-bottom: 5px;
   }
   /* Style the buttons on the calendar */
   .calendar button{
-    /* background-color: lightseagreen; */
-    background-color: brown;
-    box-shadow: 10px 5px 5px rgb(94, 58, 58);
+    background-color: var(--light-blue_color);
+    border: none;
+    height: 34.5px;
+    margin-bottom: 6px;
+    color: var(--lighter-orange);
+    font-size: 16px;
+  }
+
+  .calendar button:hover{
+    background-color: rgb(149, 213, 235);
   }
   
   .calendar button:focus{
-    background-color: white;
+    background-color: rgb(215, 235, 240);
   }
   
   /* Events Box Styling */
   .eventsBox{
     position: absolute;
-    top: 40%;
-    width: 48%;
-    height: 55%;
+    top: 50%;
+    left: 3%;
+    width: 45%;
+    height: 45%;
     border-style: solid;
     border-width: medium;
     overflow: scroll;
-    /* background-color: brown; */
-    background-image: url(https://i.ytimg.com/vi/KLR-1ca_VxI/maxresdefault_live.jpg);
-    color:aliceblue;   
-    box-shadow: 10px 5px 5px red;
-
+    border: none;
+    border-radius: 15px;
+    background-color: var(--lighter-orange);
+    color: rgb(50, 78, 146);
   }
   .eventsBox__title{
     text-align: center;
@@ -146,14 +221,9 @@
     width: 90%;
     text-align: center;
   }
-  .eventsBox__Table__Head{
 
-  }
   .eventsBox__Table_Row{
     text-align: center;
-    background-color: brown;
-  }
-  .eventsBox__Table__Row td{
     
   }
   .eventsBox__Table__Row__Button{
@@ -162,18 +232,17 @@
   
   /* Add Events Box Styling */
   .addBox{  
+    color: rgb(50, 78, 146);
     position: absolute;
-    left: 50%;
-    top: 40%;
-    width: 48%;
-    height: 55%;
-    border-style: solid;
-    border-width: medium;
-    background-image: url(https://image.freepik.com/vector-gratis/fondo-rojo-ondulado_1189-309.jpg);
-    /* background-color: brown; */
-    color:aliceblue;
-    box-shadow: 10px 5px 5px red;
-    
+    left: 53%;
+    top: 50%;
+    width: 45%;
+    height: 45%;
+    border: solid 2px;
+    border-color: white;
+    border-radius: 15px;
+    background-color: var(--lighter-orange);
+    border: none;
   }
   .addBox__title{
     text-align: center;
@@ -184,38 +253,55 @@
   .addBox input{
     width: 50%;
     padding: 1.2%;
+    background-color: var(--lighter-orange);
+    border: none;
+    border-bottom: solid 1.5px var(--orange-color);
   }
   
   /* GMU Events Button Styling */
   .gmuEventsButton{
     position: absolute;
-    left: 46%;
-    top: 36%;
-    background-color: brown;
-    color:aliceblue;
-    box-shadow: 10px 5px 5px red;
+    left: 45.5%;
+    margin-top: 12px;
+    color: white;
+    background-color: var(--orange-color);
+    border-radius: 8px;
+    font-size: 17px;
+    border: none;
+    padding: 3px 12px;
+    font-weight: bold;
+  }
+
+  .gmuEventsButton:hover{
+    background-color: rgb(246, 134, 89);
   }
   
   .LogoutButton{
     position: absolute;
     left: 90%;
     top: 5%;
-    background-color: black;
-    color:aliceblue;
-    box-shadow: 10px 5px 5px gray;
-  }
-  .addBox__content input{
-    box-shadow: 10px 5px 5px red;
-  }
-  .addBox__content button{
-    background-color: brown;
-    color:aliceblue;
-    box-shadow: 10px 5px 5px red;
+    background-color: var(--orange-color);
+    border-radius: 8px;
+    font-size: 18px;
+    border: none;
+    padding: 3px 12px;
+    font-weight: bold;
   }
 
-  /* Username */
-  .HomePage__Username{
-    position: absolute;
-    top: 0%;
-    font-size: 150%;
+  .LogoutButton:hover{
+    background-color: rgb(246, 134, 89);
+  }
+
+  .addEventButton{
+    background-color: var(--orange-color);
+    border-radius: 8px;
+    font-size: 15px;
+    border: none;
+    padding: 3px 12px;
+    color: white;
+    font-weight: bold;
+  }
+
+  .addEventButton:hover{
+    background-color: rgb(246, 134, 89);
   }
