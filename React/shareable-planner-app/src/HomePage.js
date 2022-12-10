@@ -226,27 +226,24 @@ export default function HomePage( {myPersonID, setPersonID, myUserName, setMyUse
     await sendToSchedule(event);
     // Now the invites
     const scheduleId = await fetchFromScheduleToGetId(event);
-    try{
-      const peopleToInvite = eventInvites.split(",").map((e) => e.trim());
-      if (peopleToInvite[0] !== ""){
-        for(let i = 0; i < peopleToInvite.length; i++){
-          try{
-            const inviteePerson = await fetchFromPersons(peopleToInvite[i]);
-            const inviteeId = inviteePerson[0].id;   
-            const theInvite = {
-              inviter: {"id": myPersonID}, 
-              invitee: {"id": inviteeId}, 
-              schedule: {"id": scheduleId},
-            }
-            await sendToInvites(theInvite);
+    const peopleToInvite = eventInvites.split(",").map((e) => e.trim());
+    if (peopleToInvite[0] !== ""){
+      for(let i = 0; i < peopleToInvite.length; i++){
+        try{
+          const inviteePerson = await fetchFromPersons(peopleToInvite[i]);
+          const inviteeId = inviteePerson[0].id;   
+          const theInvite = {
+            inviter: {"id": myPersonID}, 
+            invitee: {"id": inviteeId}, 
+            schedule: {"id": scheduleId},
           }
-          catch(error){
-            alert("Username is invalid: " + peopleToInvite[i]);
-          } 
+          await sendToInvites(theInvite);
+        }
+        catch(error){
+          alert("Username is invalid: " + peopleToInvite[i]);
         } 
-      }
+      } 
     }
-    catch(error){}
     // Add the event's invites to myEventInvites
     const eventOwnerName = await fetchFromPersonsToGetUserName(myPersonID);
     if (eventInvites === ""){
