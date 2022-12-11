@@ -91,26 +91,26 @@ public class Schedule {
 	}
 
 	
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-	    if (!(o instanceof Schedule))
-	    	return false;
-	    Schedule schedule = (Schedule) o;
-	    return Objects.equals(this.id, schedule.id) && Objects.equals(this.personId, schedule.personId)
-	    		&& Objects.equals(this.date, schedule.date) && Objects.equals(this.description, schedule.description) && Objects.equals(this.time, schedule.time)  && Objects.equals(this.name, schedule.name);
-	}
-	
-	@Override
-	public int hashCode() {
-	    return Objects.hash(this.id, this.description, this.personId, this.time, this.date);
-	}
-	
-	@Override
-	public String toString() {
-	    return "Order{" + "id=" + this.id + '\'' + ", clientId='" + this.personId.getId() + '\'' +
-	    		", description='" + this.description + '\''+ ", date='" + this.date + '\''+ ", time='" + this.time + '\''+ '}';
-	}
+//	@Override
+//	public boolean equals(Object o) {
+//		if (this == o)
+//			return true;
+//	    if (!(o instanceof Schedule))
+//	    	return false;
+//	    Schedule schedule = (Schedule) o;
+//	    return Objects.equals(this.id, schedule.id) && Objects.equals(this.personId, schedule.personId)
+//	    		&& Objects.equals(this.date, schedule.date) && Objects.equals(this.description, schedule.description) && Objects.equals(this.time, schedule.time)  && Objects.equals(this.name, schedule.name);
+//	}
+//	
+//	@Override
+//	public int hashCode() {
+//	    return Objects.hash(this.id, this.description, this.personId, this.time, this.date);
+//	}
+//	
+//	@Override
+//	public String toString() {
+//	    return "Order{" + "id=" + this.id + '\'' + ", clientId='" + this.personId.getId() + '\'' +
+//	    		", description='" + this.description + '\''+ ", date='" + this.date + '\''+ ", time='" + this.time + '\''+ '}';
+//	}
 }
 

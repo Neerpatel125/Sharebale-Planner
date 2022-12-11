@@ -69,25 +69,25 @@ public class Invites {
 		this.schedule = schedule;
 	}
 	
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-	    if (!(o instanceof Person))
-	    	return false;
-	    Invites invites = (Invites) o;
-	    return Objects.equals(this.id, invites.id) && Objects.equals(this.invitee, invites.invitee)
-	        && Objects.equals(this.inviter, invites.inviter) && Objects.equals(this.schedule, invites.schedule);
-	}
-	@Override
-	public int hashCode() {
-	    return Objects.hash(this.id, this.inviter, this.invitee, this.schedule);
-	}
-	
-	@Override
-	public String toString() {
-	    return "Invites{" + "id=" + this.id + '\'' + ", Inviter='" + this.inviter + '\'' + ", Invitee=" + this.invitee
-	    		+ '\'' + ", schedule" + this.schedule
-	    		+ '\'' + '}';
-	}
+//	@Override
+//	public boolean equals(Object o) {
+//		if (this == o)
+//			return true;
+//	    if (!(o instanceof Person))
+//	    	return false;
+//	    Invites invites = (Invites) o;
+//	    return Objects.equals(this.id, invites.id) && Objects.equals(this.invitee, invites.invitee)
+//	        && Objects.equals(this.inviter, invites.inviter) && Objects.equals(this.schedule, invites.schedule);
+//	}
+//	@Override
+//	public int hashCode() {
+//	    return Objects.hash(this.id, this.inviter, this.invitee, this.schedule);
+//	}
+//	
+//	@Override
+//	public String toString() {
+//	    return "Invites{" + "id=" + this.id + '\'' + ", Inviter='" + this.inviter + '\'' + ", Invitee=" + this.invitee
+//	    		+ '\'' + ", schedule" + this.schedule
+//	    		+ '\'' + '}';
+//	}
 }

@@ -60,7 +60,7 @@ public class InvitesController {
 				.collect(Collectors.toList());
 		return CollectionModel.of(Invites, linkTo(methodOn(PersonController.class).all()).withSelfRel());
 	}
-	
+	//used
 	@PostMapping("/invites")
 	public ResponseEntity<Object> newInvites(@RequestBody Invites newInvites){
 		EntityModel<Invites> entityModel = inviteAssembler.toModel(inviteRepository.save(newInvites));
@@ -75,44 +75,44 @@ public class InvitesController {
 				.orElseThrow(() -> new InvitesNotFoundException(id));
 		return inviteAssembler.toModel(invites);
 	}
-	
+	//used
 	@GetMapping("/invites/invitee/{inviteeId}")
 	public List<Invites> allInviteeId(@PathVariable Person inviteeId){
 		List<Invites> invites = inviteRepository.findByInvitee(inviteeId);
 		return invites;
 	}
-	
+	//used
 	@GetMapping("/invites/inviteeAndSchedule/{inviteeId}/{scheduleId}")
 	public Invites oneInviteeIdAndScheduleId(@PathVariable Person inviteeId, @PathVariable Schedule scheduleId){
 		Invites invites = inviteRepository.findByInviteeAndSchedule(inviteeId, scheduleId);
 		return invites;
 	}
-	
+	//used
 	@GetMapping("/invites/schedule/{scheduleId}")
 	public List<Invites> allScheduleId(@PathVariable Schedule scheduleId){
 		List<Invites> invites = inviteRepository.findBySchedule(scheduleId);
 		return invites;
 	}
 	
-	@PutMapping("/invites/{id}")
-	public ResponseEntity<Object> replaceInvites(@RequestBody Invites newInvites, @PathVariable Long id){
-		Invites updatedInvites = inviteRepository.findById(id)
-				.map(invites -> {
-					invites.setInviter(newInvites.getInviter());
-					invites.setInvitee(newInvites.getInvitee());
-					invites.setSchedule(newInvites.getSchedule());
-					return inviteRepository.save(invites);
-				})
-				.orElseGet(() -> {
-					newInvites.setId(id);
-					return inviteRepository.save(newInvites);
-				});
-		EntityModel<Invites> entityModel = inviteAssembler.toModel(updatedInvites);
-		return ResponseEntity
-				.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
-				.body(entityModel);
-	}
-	
+//	@PutMapping("/invites/{id}")
+//	public ResponseEntity<Object> replaceInvites(@RequestBody Invites newInvites, @PathVariable Long id){
+//		Invites updatedInvites = inviteRepository.findById(id)
+//				.map(invites -> {
+//					invites.setInviter(newInvites.getInviter());
+//					invites.setInvitee(newInvites.getInvitee());
+//					invites.setSchedule(newInvites.getSchedule());
+//					return inviteRepository.save(invites);
+//				})
+//				.orElseGet(() -> {
+//					newInvites.setId(id);
+//					return inviteRepository.save(newInvites);
+//				});
+//		EntityModel<Invites> entityModel = inviteAssembler.toModel(updatedInvites);
+//		return ResponseEntity
+//				.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+//				.body(entityModel);
+//	}
+	//used
 	@DeleteMapping("/invites/{id}")
 	public ResponseEntity<Object> deleteInvites(@PathVariable Long id) {
 		inviteRepository.deleteById(id);

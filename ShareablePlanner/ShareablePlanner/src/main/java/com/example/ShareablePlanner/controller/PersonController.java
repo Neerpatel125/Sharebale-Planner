@@ -42,7 +42,7 @@ public class PersonController {
 				.collect(Collectors.toList());
 		return CollectionModel.of(persons, linkTo(methodOn(PersonController.class).all()).withSelfRel());
 	}
-	
+	//used
 	@PostMapping("/persons")
 	public ResponseEntity<Object> newPerson(@RequestBody Person newPerson){
 		EntityModel<Person> entityModel = personAssembler.toModel(personRepository.save(newPerson));
@@ -50,47 +50,47 @@ public class PersonController {
 				.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
 				.body(entityModel);
 	}
-	
+	//used
 	@GetMapping("/persons/id/{id}")
 	public EntityModel<Person> one(@PathVariable Long id){
 		Person person = personRepository.findById(id)
 				.orElseThrow(() -> new PersonNotFoundException(id));
 		return personAssembler.toModel(person);
 	}
-	
+	//used
 	@GetMapping("/persons/userName/{userName}")
 	public List<Person> allUserName(@PathVariable String userName){
 		List<Person> persons = personRepository.findByUserName(userName);
 		return persons;
 	}
 	
-	@GetMapping("/persons/password/{password}")
-	public List<Person> allPassword(@PathVariable String password){
-		List<Person> persons = personRepository.findByPassword(password);
-		return persons;
-	}
+//	@GetMapping("/persons/password/{password}")
+//	public List<Person> allPassword(@PathVariable String password){
+//		List<Person> persons = personRepository.findByPassword(password);
+//		return persons;
+//	}
 	
-	@PutMapping("/persons/{id}")
-	public ResponseEntity<Object> replacePerson(@RequestBody Person newPerson, @PathVariable Long id){
-		Person updatedPerson = personRepository.findById(id)
-				.map(person -> {
-					person.setUserName(newPerson.getUserName());
-					person.setPassword(newPerson.getPassword());
-					return personRepository.save(person);
-				})
-				.orElseGet(() -> {
-					newPerson.setId(id);
-					return personRepository.save(newPerson);
-				});
-		EntityModel<Person> entityModel = personAssembler.toModel(updatedPerson);
-		return ResponseEntity
-				.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
-				.body(entityModel);
-	}
-	
-	@DeleteMapping("/persons/{id}")
-	public ResponseEntity<Object> deleteEmployee(@PathVariable Long id) {
-		personRepository.deleteById(id);
-		return ResponseEntity.noContent().build();
-	}
+//	@PutMapping("/persons/{id}")
+//	public ResponseEntity<Object> replacePerson(@RequestBody Person newPerson, @PathVariable Long id){
+//		Person updatedPerson = personRepository.findById(id)
+//				.map(person -> {
+//					person.setUserName(newPerson.getUserName());
+//					person.setPassword(newPerson.getPassword());
+//					return personRepository.save(person);
+//				})
+//				.orElseGet(() -> {
+//					newPerson.setId(id);
+//					return personRepository.save(newPerson);
+//				});
+//		EntityModel<Person> entityModel = personAssembler.toModel(updatedPerson);
+//		return ResponseEntity
+//				.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+//				.body(entityModel);
+//	}
+//	
+//	@DeleteMapping("/persons/{id}")
+//	public ResponseEntity<Object> deleteEmployee(@PathVariable Long id) {
+//		personRepository.deleteById(id);
+//		return ResponseEntity.noContent().build();
+//	}
 }

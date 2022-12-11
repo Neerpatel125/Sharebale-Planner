@@ -66,25 +66,25 @@ public class Person {
 	public String getEmail() {
 		return this.email;
 	}
-	
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-	    if (!(o instanceof Person))
-	    	return false;
-	    Person employee = (Person) o;
-	    return Objects.equals(this.id, employee.id) && Objects.equals(this.userName, employee.userName) && Objects.equals(this.password, employee.password);
-	}
-	@Override
-	public int hashCode() {
-	    return Objects.hash(this.id, this.userName, this.password, this.email);
-	}
-	
-	@Override
-	public String toString() {
-	    return "Order{" + "id=" + this.id + '\'' + ", firstName='" + this.userName
-	    		+ '\'' + ", password" + this.password + '\'' + ", email=" + this.email 
-	    		+ '\'' + '}';
-	}
+//	
+//	@Override
+//	public boolean equals(Object o) {
+//		if (this == o)
+//			return true;
+//	    if (!(o instanceof Person))
+//	    	return false;
+//	    Person employee = (Person) o;
+//	    return Objects.equals(this.id, employee.id) && Objects.equals(this.userName, employee.userName) && Objects.equals(this.password, employee.password);
+//	}
+//	@Override
+//	public int hashCode() {
+//	    return Objects.hash(this.id, this.userName, this.password, this.email);
+//	}
+//	
+//	@Override
+//	public String toString() {
+//	    return "Order{" + "id=" + this.id + '\'' + ", firstName='" + this.userName
+//	    		+ '\'' + ", password" + this.password + '\'' + ", email=" + this.email 
+//	    		+ '\'' + '}';
+//	}
 }

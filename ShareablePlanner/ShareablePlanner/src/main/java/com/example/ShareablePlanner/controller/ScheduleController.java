@@ -45,7 +45,7 @@ public class ScheduleController {
 				.collect(Collectors.toList());
 		return CollectionModel.of(availability, linkTo(methodOn(ScheduleController.class).all()).withSelfRel());
 	}
-	
+	//used
 	@PostMapping("/schedules")
 	public ResponseEntity<Object> newSchedule(@RequestBody Schedule newSchedule){
 
@@ -69,47 +69,47 @@ public class ScheduleController {
 				.orElseThrow(() -> new ScheduleNotFoundException(id));
 		return scheduleAssembler.toModel(schedule);
 	}
-	
+	//used
 	@GetMapping("/schedules/{ymd}/{personId}")
 	public List<Schedule> allYMDpersonId(@PathVariable String ymd, @PathVariable Person personId){
 		List<Schedule> schedule = scheduleRepository.findByDateAndPersonId(ymd, personId);
 		return schedule;
 	}
-	
+	//used
 	@GetMapping("/schedules/{personId}/{date}/{time}/{name}")
 	public Schedule onePersonIdDateTimeName(@PathVariable String date, @PathVariable Person personId, @PathVariable String time, @PathVariable String name){
 		Schedule schedule = scheduleRepository.findByPersonIdAndDateAndTimeAndName(personId, date, time, name);
 		return schedule;
 	}
 	
-	@PutMapping("/schedules/{id}")
-	public ResponseEntity<Object> replaceSchedule(@RequestBody Schedule newSchedule, @PathVariable Long id){
-		Person person = personRepository.findById(newSchedule.getPersonId().getId()).get();
-		if(person == null) {
-			throw new PersonNotFoundException(newSchedule.getPersonId().getId());
-		}
-		else {
-			newSchedule.setPersonId(person);
-		}
-
-		Schedule updatedSchedule = scheduleRepository.findById(id)
-				.map(schedule -> {
-					schedule.setPersonId(newSchedule.getPersonId());
-					schedule.setDescription(newSchedule.getDescription());
-					schedule.setName(newSchedule.getName());
-					schedule.setDate(newSchedule.getDate());
-					schedule.setTime(newSchedule.getTime());
-					return scheduleRepository.save(schedule);
-				})
-				.orElseGet(() -> {
-					return scheduleRepository.save(newSchedule);
-				});
-		EntityModel<Schedule> entityModel = scheduleAssembler.toModel(updatedSchedule);
-		return ResponseEntity
-				.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
-				.body(entityModel);
-	}
-	
+//	@PutMapping("/schedules/{id}")
+//	public ResponseEntity<Object> replaceSchedule(@RequestBody Schedule newSchedule, @PathVariable Long id){
+//		Person person = personRepository.findById(newSchedule.getPersonId().getId()).get();
+//		if(person == null) {
+//			throw new PersonNotFoundException(newSchedule.getPersonId().getId());
+//		}
+//		else {
+//			newSchedule.setPersonId(person);
+//		}
+//
+//		Schedule updatedSchedule = scheduleRepository.findById(id)
+//				.map(schedule -> {
+//					schedule.setPersonId(newSchedule.getPersonId());
+//					schedule.setDescription(newSchedule.getDescription());
+//					schedule.setName(newSchedule.getName());
+//					schedule.setDate(newSchedule.getDate());
+//					schedule.setTime(newSchedule.getTime());
+//					return scheduleRepository.save(schedule);
+//				})
+//				.orElseGet(() -> {
+//					return scheduleRepository.save(newSchedule);
+//				});
+//		EntityModel<Schedule> entityModel = scheduleAssembler.toModel(updatedSchedule);
+//		return ResponseEntity
+//				.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+//				.body(entityModel);
+//	}
+	//used
 	@DeleteMapping("/schedules/{id}")
 	public ResponseEntity<Object> deleteSchedule(@PathVariable Long id){
 		scheduleRepository.deleteById(id);
